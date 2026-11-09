@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f7f5ec">
+  <title>Unser Sortiment | LECKERDING™</title>
+  <meta name="description" content="Drei Gerichte aus dem LECKERDING-Sortiment mit Zutatenbeschreibung und Allergenhinweisen.">
+  <link rel="icon" type="image/webp" href="../assets/img/maskottchen.webp">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#inhalt">Zum Inhalt springen</a>
+  <header class="masthead">
+    <div class="wrap mast-inner">
+      <a href="../index.html" class="wordmark" aria-label="LECKERDING – Startseite">
+        <img alt="" src="../assets/img/maskottchen.webp" width="39" height="43">
+        <span>LECKERDING<sup>™</sup></span>
+      </a>
+      <nav class="nav" aria-label="Hauptnavigation"><a href="../index.html">Home</a> <a href="../sortiment/index.html" aria-current="page">Sortiment</a> <a href="../kontakt/index.html">Kontakt</a></nav>
+      <a class="button nav-cta" href="../kontakt/index.html#standort">Standort anfragen <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
+    </div>
+  </header>
+  <main id="inhalt">
+    <section class="wrap page-intro">
+      <p class="eyebrow"><span class="dot"></span> Unser Sortiment</p>
+      <h1>Auf der <em>Speisekarte.</em></h1>
+      <p class="intro">Würziges Curry, cremiges Tikka Masala oder ein deftiges Gulasch? Entdecke drei unserer Gerichte. Die Auswahl im Automaten variiert je nach Standort.</p>
+    </section>
+    <section class="wrap catalog" aria-label="Gerichte">
+      <div class="filter-bar" hidden data-filters>
+        <div class="filters" role="group" aria-label="Gerichte filtern">
+          <button type="button" data-filter="alle" aria-pressed="true">Alle Gerichte</button>
+          <button type="button" data-filter="pflanzlich" aria-pressed="false">Pflanzlich</button>
+          <button type="button" data-filter="fleisch" aria-pressed="false">Mit Fleisch</button>
+        </div>
+        <label class="allergen-control">Gerichte ausblenden mit
+          <select id="allergen"><option value="">Kein Allergen gewählt</option>
+            <option value="milch">Milch</option><option value="sesam">Sesam</option>
+            <option value="weizen">Weizen (Gluten)</option>
+          </select>
+        </label><span class="count" aria-live="polite">3 Gerichte</span>
+      </div>
+      <div class="food-grid">
+      <article class="food-card" id="tikka-masala" data-allergens="milch sesam" data-category="fleisch">
+        <div class="food-photo"><img src="../assets/img/tikka-masala.webp" width="820" height="615" alt="Tikka Masala mit Reis auf einem weißen Teller." loading="lazy"></div>
+        <div class="food-info"><span class="food-tag fleisch"><i aria-hidden="true"></i>Hähnchen</span><h2>Tikka Masala</h2><p>Hähnchenbrust, weiße Bohnen und Paprika in würziger Tomaten-Sahne-Sauce mit Langkornreis.</p>
+          <details><summary>Allergene ansehen</summary><p>Milch, Sesam</p></details>
+        </div>
+      </article>
+      <article class="food-card" id="kichererbsencurry" data-allergens="sesam" data-category="pflanzlich">
+        <div class="food-photo"><img src="../assets/img/kichererbsencurry.webp" width="820" height="615" alt="Gelbes Kichererbsencurry mit Reis auf einem weißen Teller." loading="lazy"></div>
+        <div class="food-info"><span class="food-tag pflanzlich"><i aria-hidden="true"></i>Pflanzlich</span><h2>Kichererbsencurry</h2><p>Kichererbsen und buntes Gemüse in Kokosmilch mit Zitronengras und Curry, dazu Langkornreis.</p>
+          <details><summary>Allergene ansehen</summary><p>Sesam</p></details>
+        </div>
+      </article>
+      <article class="food-card" id="rindergulasch" data-allergens="weizen milch" data-category="fleisch">
+        <div class="food-photo"><img src="../assets/img/rindergulasch.webp" width="820" height="615" alt="Rindergulasch mit Orecchiette auf einem weißen Teller." loading="lazy"></div>
+        <div class="food-info"><span class="food-tag fleisch"><i aria-hidden="true"></i>Rind</span><h2>Rindergulasch mit Nudeln</h2><p>Rindfleisch mit Paprika, Zwiebeln und einem Löffel Ajvar, serviert mit Orecchiette.</p>
+          <details><summary>Allergene ansehen</summary><p>Weizen (Gluten), Milch</p></details>
+        </div>
+      </article>
+      </div>
+      <p data-empty hidden>Für diese Auswahl gibt es kein Gericht. <button type="button" class="reset">Filter zurücksetzen</button></p>
+      <p class="catalog-note">Der Filter berücksichtigt die angegebenen Zutatenallergene dieser drei Gerichte. Zu möglichen Spuren liegen uns keine Angaben vor. Bitte prüfe die Kennzeichnung auf deiner Verpackung.</p>
+    </section>
+    <section class="partner-band"><div class="wrap partner-inner"><div><p class="eyebrow">Für Standortpartner</p><h2>Was schmeckt eurem Team?</h2><p>Wir stimmen die Auswahl auf die Menschen an deinem Standort ab.</p></div><a class="button light" href="../kontakt/index.html#standort">Standort anfragen <svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M6 6h12v12"/></svg></a></div></section>
+  </main>
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a class="wordmark" href="../index.html">LECKERDING<sup>™</sup></a>
+      <small>© LECKERDING GmbH</small>
+      <nav aria-label="Rechtliches"><a href="https://www.leckerding.com/impressum/">Impressum</a><a href="https://www.leckerding.com/datenschutzerklarung/">Datenschutz</a></nav>
+    </div>
+  </footer>
+</body>
+</html>
