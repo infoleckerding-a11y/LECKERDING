@@ -1,58 +1,19 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.leckerding.com/</loc>
+  </url>
+  <url>
     <loc>https://www.leckerding.com/agb/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/allergene/</loc>
   </url>
   <url>
     <loc>https://www.leckerding.com/blog/</loc>
   </url>
   <url>
-    <loc>https://www.leckerding.com/blog/lunch-zuschuss-ohne-budgetchaos/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/blog/vollbetreut-lunch/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/blog/welches-lunch-modell-passt/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/datenschutzerklaerung/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/agb/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/blog/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/blog/lunch-zuschuss-ohne-budgetchaos/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/blog/vollbetreut-lunch/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/blog/welches-lunch-modell-passt/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/datenschutzerklaerung/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/faq/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/impressum/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/kontakt/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/sortiment/</loc>
-  </url>
-  <url>
-    <loc>https://www.leckerding.com/en/standortloesungen/</loc>
+    <loc>https://www.leckerding.com/datenschutzerklarung/</loc>
   </url>
   <url>
     <loc>https://www.leckerding.com/faq/</loc>
@@ -61,15 +22,60 @@
     <loc>https://www.leckerding.com/impressum/</loc>
   </url>
   <url>
-    <loc>https://www.leckerding.com/</loc>
+    <loc>https://www.leckerding.com/kontakt/</loc>
   </url>
   <url>
-    <loc>https://www.leckerding.com/kontakt/</loc>
+    <loc>https://www.leckerding.com/old-home/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/old-partnerschaftsmodelle/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/old-sortiment/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/old-sortiment-1/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/old-standortloesungen/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/old-ueber-uns/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/old-unserer-automat/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/partnerschaftsmodelle/</loc>
   </url>
   <url>
     <loc>https://www.leckerding.com/sortiment/</loc>
   </url>
   <url>
     <loc>https://www.leckerding.com/standortloesungen/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/ueber-uns/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/unserer-automat/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/blog/problemfall-mittagspause/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/blog/warum-leckerding/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/blog/vollbetreut-lunch/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/blog/kuratierte-auswahl/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/blog/lunch-zuschuss-ohne-budgetchaos/</loc>
+  </url>
+  <url>
+    <loc>https://www.leckerding.com/blog/welches-lunch-modell-passt/</loc>
   </url>
 </urlset>

@@ -29,7 +29,7 @@
  <a class="skip" href="#content">Skip to content</a><header class="header"><div class="wrap head-inner">
  <a class="logo" href="index.html" aria-label="LECKERDING home"><img src="../assets/img/leckerding-logo.webp" width="504" height="800" alt="LECKERDING™ logo with chef-hat mascot"><span>LECKERDING<sup>™</sup></span></a>
  <button class="menu-toggle" type="button" data-menu-button aria-expanded="false" aria-controls="main-menu">☰ Menu</button>
- <nav id="main-menu" class="nav" data-menu data-open="false" aria-label="Main navigation"><a href="sortiment/index.html">Menu</a><a href="standortloesungen/index.html">Locations</a><a href="faq/index.html">FAQ</a><a href="blog/index.html">Blog</a><a href="kontakt/index.html">Contact</a></nav>
+ <nav id="main-menu" class="nav" data-menu data-open="false" aria-label="Main navigation"><a href="index.html" data-home="">Home</a><a href="sortiment/index.html">Menu</a><a href="standortloesungen/index.html">Locations</a><a href="faq/index.html">FAQ</a><a href="blog/index.html">Blog</a><a href="kontakt/index.html">Contact</a><a href="../ueber-uns/index.html" data-founder="">About us</a></nav>
  <div class="lang" aria-label="Choose language">
 <a href="../index.html" lang="de">DE</a><a href="index.html" lang="en" aria-current="page">EN</a>
 </div>
@@ -81,13 +81,14 @@
 </div>
 <p>Simple, with no waiting around. Explore the three steps below.</p>
 </div>
- <div class="steps-layout">
+ <button type="button" class="btn outline step-pause" data-step-pause aria-pressed="false">Pause rotation</button><p class="step-hint">Select a step, or follow the automatic demonstration.</p>
+<div class="steps-layout">
 <div class="step-buttons" role="tablist" aria-label="How the machine works">
- <button class="step-btn" role="tab" aria-selected="true" data-step="0"><b>01</b><span><strong>Choose a meal</strong><small>Browse the touchscreen</small></span></button>
- <button class="step-btn" role="tab" aria-selected="false" data-step="1"><b>02</b><span><strong>Pay contactlessly</strong><small>Convenient and cashless</small></span></button>
- <button class="step-btn" role="tab" aria-selected="false" data-step="2"><b>03</b><span><strong>Heat &amp; enjoy</strong><small>Or take away chilled</small></span></button>
+ <button class="step-btn" role="tab" aria-selected="true" data-step="0" id="step-0" aria-controls="step-panel"><b>01</b><span><strong>Choose a meal</strong><small>Browse the touchscreen</small></span></button>
+ <button class="step-btn" role="tab" aria-selected="false" data-step="1" id="step-1" aria-controls="step-panel"><b>02</b><span><strong>Pay contactlessly</strong><small>Convenient and cashless</small></span></button>
+ <button class="step-btn" role="tab" aria-selected="false" data-step="2" id="step-2" aria-controls="step-panel"><b>03</b><span><strong>Heat &amp; enjoy</strong><small>Or take away chilled</small></span></button>
  </div>
-<div class="step-preview" data-step-preview aria-live="polite">
+<div class="step-preview" data-step-preview aria-live="off" id="step-panel" role="tabpanel" aria-labelledby="step-0">
 <div class="counter">01/03</div>
 <div class="emoji" aria-hidden="true">🍲</div>
 <h3>Choose a meal</h3>
@@ -322,7 +323,7 @@
 <p>The green area is estimated from road routes without live traffic. Send us your address for an assessment.</p>
 <a class="btn primary" href="kontakt/index.html#anfrage">Ask about your address <span aria-hidden="true">↗</span></a>
 </div>
-<figure><a href="../assets/img/service-area-75.svg" target="_blank" rel="noopener"><img loading="lazy" src="../assets/img/service-area-75.svg" alt="Map showing the starting point at Warschauer Straße 59A and the approximate 75-minute driving area in Berlin and Brandenburg."></a><figcaption>Open map to enlarge · <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Warschauer+Stra%C3%9Fe+59A%2C+10243+Berlin&amp;travelmode=driving" target="_blank" rel="noopener">Check your route</a> · <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a></figcaption></figure>
+<figure><a href="../assets/img/service-area-75.svg" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="../assets/img/service-area-75.svg" alt="Map showing the starting point at Warschauer Straße 59A and the approximate 75-minute driving area in Berlin and Brandenburg."></a><figcaption>Open map to enlarge · <a href="https://www.google.com/maps/dir/?api=1&amp;origin=Warschauer+Stra%C3%9Fe+59A%2C+10243+Berlin&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">Check your route</a> · <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a></figcaption></figure>
 </div></section><section class="journal-invite"><div class="wrap">
 <h2>From the LECKERDING journal</h2>
 <p>Practical reading on shift meals, subsidies and site planning.</p>

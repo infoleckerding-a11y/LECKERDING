@@ -4,7 +4,6 @@ const en=document.documentElement.lang==='en',pick=(de,eng)=>en?eng:de,wa='https
 const menu=document.querySelector('[data-menu]'),toggle=document.querySelector('[data-menu-button]');
 toggle?.addEventListener('click',()=>{let open=menu.dataset.open==='true';menu.dataset.open=String(!open);toggle.setAttribute('aria-expanded',String(!open))});
 const steps=[['🍲','Gericht auswählen','Choose a meal','Mahlzeit auf dem Touchscreen wählen.','Choose a meal on the touchscreen.'],['💳','Kontaktlos bezahlen','Pay contactlessly','Bequem bargeldlos zahlen.','Pay easily without cash.'],['♨️','Erhitzen oder mitnehmen','Heat or take away','Direkt heiß genießen oder gekühlt mitnehmen.','Enjoy it warm, or take it chilled.']];
-document.querySelectorAll('[data-step]').forEach(btn=>btn.addEventListener('click',()=>{const n=Number(btn.dataset.step),s=steps[n];document.querySelectorAll('[data-step]').forEach(x=>x.setAttribute('aria-selected',String(x===btn)));let view=document.querySelector('[data-step-preview]');if(!view)return;view.querySelector('.emoji').textContent=s[0];view.querySelector('h3').textContent=s[en?2:1];view.querySelector('p').textContent=s[en?4:3];view.querySelector('.counter').textContent='0'+(n+1)+'/03'}));
 const models={self:['Selbstzahler-Modell','Self-pay model','Nutzer zahlen selbst. Wir prüfen gemeinsam, ob das Standortkonzept wirtschaftlich passt.','Customers pay for meals themselves. We assess whether the location is a good fit.'],subsidy:['Mitarbeiter-Zuschuss','Employee meal subsidy','Vergünstigte Mahlzeiten als Benefit, mit individuell abgestimmter Kosten- und Steuerstruktur.','Subsidised employee meals with an individually agreed cost and tax structure.'],rent:['Miet- oder Pauschalmodell','Rental or fixed-fee model','Eine vereinbarte Monatsgebühr schafft planbare Kosten.','An agreed monthly fee creates predictable costs.'],partner:['Individuelle Partnerschaft','Tailored partnership','Bei passenden Flächen prüfen wir Umsatz- oder Standortmodelle.','For suitable sites, we can consider revenue-sharing or location arrangements.']};
 document.querySelector('[data-model]')?.addEventListener('change',e=>{let m=models[e.target.value];document.querySelector('[data-model-title]').textContent=m[en?1:0];document.querySelector('[data-model-desc]').textContent=m[en?3:2]});
 let category='all';const foods=[...document.querySelectorAll('[data-meal-category]')],filters=[...document.querySelectorAll('[data-filter]')],search=document.querySelector('[data-search]'),allergen=document.querySelector('[data-allergen]');
@@ -78,4 +77,84 @@ document.querySelector('[data-lead-form]')?.addEventListener('submit',e=>{e.prev
 const key='leckerding-privacy-v1',banner=document.querySelector('[data-cookie]');
 document.querySelectorAll('[data-consent]').forEach(btn=>btn.addEventListener('click',()=>{try{localStorage.setItem(key,btn.dataset.consent);if(btn.dataset.consent==='functional')localStorage.setItem('leckerding-language',en?'en':'de');else localStorage.removeItem('leckerding-language')}catch{}if(banner)banner.hidden=true}));
 document.querySelectorAll('[data-settings]').forEach(btn=>btn.addEventListener('click',()=>{if(banner){banner.hidden=false;banner.querySelector('button')?.focus()}}));
+/* Discoverable vending demonstration with user-controlled rotation. */
+const stepButtons = [...document.querySelectorAll('[data-step]')];
+const stepView = document.querySelector('[data-step-preview]');
+const motion = matchMedia('(prefers-reduced-motion: reduce)');
+let stepIndex = 0;
+let rotationPaused = motion.matches;
+let rotationTimer;
+const rotationControl = document.querySelector('[data-step-pause]');
+function renderStep(index) {
+  stepIndex = index;
+  stepView.setAttribute('aria-labelledby', 'step-' + index);
+  const step = steps[index];
+  stepButtons.forEach((button, i) => {
+    button.setAttribute('aria-selected', String(i === index));
+    button.tabIndex = i === index ? 0 : -1;
+  });
+  stepView.querySelector('.emoji').textContent = step[0];
+  stepView.querySelector('h3').textContent = step[en ? 2 : 1];
+  stepView.querySelector('p').textContent = step[en ? 4 : 3];
+  stepView.querySelector('.counter').textContent = '0' + (index + 1) + '/03';
+}
+function scheduleRotation() {
+  clearInterval(rotationTimer);
+  if (rotationControl) {
+    rotationControl.textContent = rotationPaused ? pick('▶ Ablauf starten', '▶ Start rotation') : pick('Ⅱ Ablauf pausieren', 'Ⅱ Pause rotation');
+    rotationControl.setAttribute('aria-pressed', String(rotationPaused));
+  }
+  if (!rotationPaused && !document.hidden) {
+    rotationTimer = setInterval(() => renderStep((stepIndex + 1) % stepButtons.length), 3000);
+  }
+}
+if (stepButtons.length && stepView) {
+  stepButtons.forEach((button, index) => {
+    button.addEventListener('click', () => { renderStep(index); scheduleRotation(); });
+    button.addEventListener('keydown', event => {
+      const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'];
+      if (!keys.includes(event.key)) return;
+      event.preventDefault();
+      let target = (index + (['ArrowLeft','ArrowUp'].includes(event.key) ? 2 : 1)) % 3;
+      if (event.key === 'Home') target = 0;
+      if (event.key === 'End') target = 2;
+      rotationPaused = true;
+      renderStep(target);
+      stepButtons[target].focus();
+      scheduleRotation();
+    });
+  });
+  rotationControl?.addEventListener('click', () => { rotationPaused = !rotationPaused; scheduleRotation(); });
+  document.addEventListener('visibilitychange', scheduleRotation);
+  motion.addEventListener('change', () => { rotationPaused = motion.matches; scheduleRotation(); });
+  renderStep(0);
+  scheduleRotation();
+}
+const faqSearch = document.querySelector('[data-faq-search]');
+if (faqSearch) {
+  const normalize = text => text.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ß/g, 'ss');
+  const groups = [...document.querySelectorAll('.faq-group')];
+  const questions = [...document.querySelectorAll('.faq-group details')];
+  const count = document.querySelector('[data-faq-count]');
+  const empty = document.querySelector('[data-faq-empty]');
+  function searchFaq() {
+    const terms = normalize(faqSearch.value.trim()).split(/\s+/).filter(Boolean);
+    let visible = 0;
+    for (const question of questions) {
+      const matches = terms.every(term => normalize(question.textContent).includes(term));
+      question.hidden = !matches;
+      if (matches) visible++;
+    }
+    groups.forEach(group => { group.hidden = !group.querySelector('details:not([hidden])'); });
+    document.querySelectorAll('.faq-topics a').forEach(link => {
+      link.hidden = document.getElementById(link.hash.slice(1)).hidden;
+    });
+    count.textContent = visible + pick(' von ', ' of ') + questions.length + pick(' Fragen', ' questions');
+    empty.hidden = visible > 0;
+  }
+  faqSearch.addEventListener('input', searchFaq);
+  document.querySelector('[data-faq-reset]')?.addEventListener('click', () => { faqSearch.value = ''; searchFaq(); faqSearch.focus(); });
+  searchFaq();
+}
+
 })();
