@@ -23,6 +23,30 @@ if(mainNav){
  triggers.forEach(btn=>btn.addEventListener('click',()=>{const next=btn.getAttribute('aria-expanded')!=='true';close();btn.setAttribute('aria-expanded',String(next));document.getElementById(btn.getAttribute('aria-controls')).hidden=!next;}));
  document.addEventListener('click',event=>{if(!event.target.closest('.nav-group'))close();});
  document.addEventListener('keydown',event=>{if(event.key==='Escape'){const open=triggers.find(b=>b.getAttribute('aria-expanded')==='true');if(open){close();open.focus();}}});
+ /* On desktop, the panels open on hover just like a corporate mega-menu.
+    Click remains available for keyboard, touch and pointer users. */
+ const hoverPointer=matchMedia('(hover: hover) and (pointer: fine)');
+ for(const btn of triggers){
+   const group=btn.closest('.nav-group');
+   group.addEventListener('mouseenter',()=>{
+     if(!hoverPointer.matches)return;
+     close();btn.setAttribute('aria-expanded','true');
+     document.getElementById(btn.getAttribute('aria-controls')).hidden=false;
+   });
+   group.addEventListener('mouseleave',()=>{if(hoverPointer.matches)close();});
+ }
+ /* Keep readers on the matching page when switching languages. */
+ const languageLinks=document.querySelectorAll('.lang a[lang]');
+ if(languageLinks.length){
+   const canonical=document.querySelector('link[rel="canonical"]')?.href||location.href;
+   let route=new URL(canonical,location.href).pathname.replace(/^\/+/,'').replace(/^en\//,'');
+   if(!route||route.endsWith('/'))route+='index.html';
+   const translated=new Set(['index.html','sortiment/index.html','standortloesungen/index.html','kontakt/index.html','faq/index.html','blog/index.html','ueber-uns/index.html','impressum/index.html','agb/index.html','datenschutzerklaerung/index.html','blog/lunch-zuschuss-ohne-budgetchaos/index.html','blog/vollbetreut-lunch/index.html','blog/welches-lunch-modell-passt/index.html']);
+   const englishRoute=translated.has(route)?route:(route.startsWith('blog/')?'blog/index.html':'index.html');
+   for(const anchor of languageLinks){
+     anchor.href=anchor.lang==='en'?root+'en/'+englishRoute:root+route;
+   }
+ }
 }
 const steps=[['🍲','Gericht auswählen','Choose a meal','Mahlzeit auf dem Touchscreen wählen.','Choose a meal on the touchscreen.'],['💳','Kontaktlos bezahlen','Pay contactlessly','Bequem bargeldlos zahlen.','Pay easily without cash.'],['♨️','Erhitzen oder mitnehmen','Heat or take away','Direkt heiß genießen oder gekühlt mitnehmen.','Enjoy it warm, or take it chilled.']];
 const models={self:['Selbstzahler-Modell','Self-pay model','Nutzer zahlen selbst. Wir prüfen gemeinsam, ob das Standortkonzept wirtschaftlich passt.','Customers pay for meals themselves. We assess whether the location is a good fit.'],subsidy:['Mitarbeiter-Zuschuss','Employee meal subsidy','Vergünstigte Mahlzeiten als Benefit, mit individuell abgestimmter Kosten- und Steuerstruktur.','Subsidised employee meals with an individually agreed cost and tax structure.'],rent:['Miet- oder Pauschalmodell','Rental or fixed-fee model','Eine vereinbarte Monatsgebühr schafft planbare Kosten.','An agreed monthly fee creates predictable costs.'],partner:['Individuelle Partnerschaft','Tailored partnership','Bei passenden Flächen prüfen wir Umsatz- oder Standortmodelle.','For suitable sites, we can consider revenue-sharing or location arrangements.']};
