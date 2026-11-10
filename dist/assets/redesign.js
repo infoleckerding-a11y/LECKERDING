@@ -101,24 +101,55 @@ if (sectors) {
   choose(buttons[0]);
   sectors.hidden = false;
 }
-const leadForm = document.querySelector('[data-lead-form]');
-if (leadForm) {
-  const params = new URLSearchParams(location.search);
-  const option = [...leadForm.elements.type.options].find(item => item.dataset.site === params.get('site') && item.dataset.site);
-  if (option) {
-    option.selected = true;
-    const topic = params.get('topic');
-    if (topic) leadForm.elements.message.value = pick('Ich interessiere mich für einen Standort im Bereich ', 'I am interested in a location for ') + topic.slice(0,100) + '.';
-  }
-  leadForm.elements.method.addEventListener('change', () => {
-    leadForm.querySelector('[type=submit]').textContent = leadForm.elements.method.value === 'whatsapp'
-      ? pick('Anfrage in WhatsApp öffnen ↗','Open enquiry in WhatsApp ↗')
-      : pick('Anfrage im E-Mail-Programm öffnen ↗','Open enquiry in my email app ↗');
-  });
+const leadForm=document.querySelector('[data-lead-form]');
+if(leadForm){
+ const params=new URLSearchParams(location.search);
+ const site=leadForm.elements.type;
+ const option=[...site.options].find(item=>item.dataset.site===params.get('site')&&item.dataset.site);
+ if(option){
+   option.selected=true;
+   const topic=params.get('topic');
+   if(topic)leadForm.elements.message.value=pick('Ich interessiere mich für einen Standort im Bereich ','I am interested in a location for ')+topic.slice(0,100)+'.';
+ }
+ const feedback=leadForm.querySelector('[data-form-feedback]');
+ const button=leadForm.querySelector('[type=submit]');
+ const originalLabel=button.textContent;
+ const method=leadForm.elements.method;
+ const phone=leadForm.elements.phone;
+ method.addEventListener('change',()=>{
+   phone.required=method.value==='WhatsApp';
+   leadForm.querySelector('label[for=phone]').textContent=phone.required?pick('Telefonnummer für WhatsApp *','Phone number for WhatsApp *'):pick('Telefonnummer (optional)','Phone number (optional)');
+ });
+ leadForm.addEventListener('submit',async event=>{
+   event.preventDefault();
+   if(!leadForm.reportValidity())return;
+   if(leadForm.elements._honey.value.trim())return;
+   button.disabled=true;
+   button.textContent=pick('Wird gesendet …','Sending …');
+   feedback.className='form-feedback';
+   feedback.textContent=pick('Anfrage wird übermittelt …','Submitting your enquiry …');
+   try{
+     const response=await fetch('https://formsubmit.co/ajax/info@leckerding.com',{
+       method:'POST',headers:{'Accept':'application/json'},body:new FormData(leadForm),credentials:'omit',referrerPolicy:'strict-origin-when-cross-origin'
+     });
+     if(!response.ok)throw new Error('HTTP '+response.status);
+     const result=await response.json();
+     if(result.success!==true&&result.success!=='true')throw new Error(result.message||'Form service declined the request');
+     leadForm.reset();
+     phone.required=false;
+     feedback.className='form-feedback is-success';
+     feedback.textContent=pick('Vielen Dank! Der Formulardienst hat Ihre Anfrage angenommen. Unser Team meldet sich nach der Zustellung bei Ihnen.','Thank you! The form service has accepted your enquiry. Our team will get back to you once it is delivered.');
+   }catch(error){
+     feedback.className='form-feedback is-error';
+     feedback.textContent=pick('Die Anfrage konnte nicht bestätigt werden. Bitte versuchen Sie es erneut oder schreiben Sie direkt an info@leckerding.com.','The enquiry could not be confirmed. Please try again or email info@leckerding.com directly.');
+   }finally{
+     button.disabled=false;
+     button.textContent=originalLabel;
+   }
+ });
 }
 function openWhatsApp(text){window.open(wa+'?text='+encodeURIComponent(text),'_blank','noopener,noreferrer')}
 document.querySelector('[data-chat-send]')?.addEventListener('click',()=>{let msg=input.value.trim();if(msg)openWhatsApp(msg);else input.focus()});
-document.querySelector('[data-lead-form]')?.addEventListener('submit',e=>{e.preventDefault();const form=e.target;if(!form.reportValidity())return;let f=new FormData(form),msg=pick('Hallo LECKERDING, ich möchte einen Standort prüfen lassen.','Hello LECKERDING, I would like to discuss a location.')+'\n\n'+['Name: '+f.get('name'),'Email: '+f.get('email'),pick('Standort: ','Location: ')+f.get('location'),pick('Standortart: ','Site type: ')+f.get('type'),pick('Nachricht: ','Message: ')+f.get('message')].join('\n');if(f.get('method')==='whatsapp')openWhatsApp(msg);else window.location.href='mailto:info@leckerding.com?subject='+encodeURIComponent(pick('Standortanfrage an LECKERDING','LECKERDING location enquiry'))+'&body='+encodeURIComponent(msg)});
 const key='leckerding-privacy-v1',banner=document.querySelector('[data-cookie]');
 document.querySelectorAll('[data-consent]').forEach(btn=>btn.addEventListener('click',()=>{try{localStorage.setItem(key,btn.dataset.consent);if(btn.dataset.consent==='functional')localStorage.setItem('leckerding-language',en?'en':'de');else localStorage.removeItem('leckerding-language')}catch{}if(banner)banner.hidden=true}));
 document.querySelectorAll('[data-settings]').forEach(btn=>btn.addEventListener('click',()=>{if(banner){banner.hidden=false;banner.querySelector('button')?.focus()}}));

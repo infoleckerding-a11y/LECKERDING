@@ -52,22 +52,26 @@
 </div>
  <p><a href="https://wa.me/4915511546761" target="_blank" rel="noopener noreferrer">WhatsApp direkt öffnen ↗</a></p>
 </div>
- <div><form class="contact-card" data-lead-form action="mailto:info@leckerding.com" method="post" enctype="text/plain">
+ <div><form class="contact-card" data-lead-form action="https://formsubmit.co/info@leckerding.com" method="POST" accept-charset="UTF-8">
+<input type="hidden" name="_subject" value="Neue Standortanfrage über leckerding.com">
+<input type="hidden" name="_template" value="table">
+<input type="hidden" name="_captcha" value="false">
+<div class="form-trap" aria-hidden="true"><label for="website-trap">Website</label><input id="website-trap" name="_honey" tabindex="-1" autocomplete="off"></div>
 <p class="eyebrow">Unverbindliche Anfrage</p>
 <h2>Ihr Standort-Check</h2>
-<p class="small muted">Das Formular bereitet eine Nachricht für E-Mail oder WhatsApp vor. Es erfolgt kein automatischer Versand über diese Website.</p>
+<p class="small muted">Senden Sie Ihre Standortanfrage direkt an unser Team – ohne E-Mail-Programm oder WhatsApp.</p>
  <div class="form-grid">
 <div>
-<label for="name">Name *</label><input class="field" id="name" name="name" required autocomplete="name">
+<label for="name">Name *</label><input class="field" id="name" name="name" type="text" required minlength="2" maxlength="120" autocomplete="name">
 </div>
 <div>
-<label for="email">E-Mail (für Rückfragen)</label><input class="field" type="email" id="email" name="email" autocomplete="email">
+<label for="email">E-Mail-Adresse *</label><input class="field" type="email" id="email" name="email" required maxlength="180" autocomplete="email">
 </div>
  <div class="full">
-<label for="location">Unternehmen / Standort</label><input class="field" id="location" name="location">
+<label for="location">Unternehmen / Standort</label><input class="field" id="location" name="location" maxlength="180" autocomplete="organization">
 </div>
 <div class="full">
-<label for="type">Standorttyp</label><select class="field" id="type" name="type"><option>Bitte auswählen</option>
+<label for="type">Standorttyp</label><select class="field" id="type" name="type" required><option value="" disabled selected>Bitte auswählen</option>
 <option data-site="office">Büro</option>
 <option data-site="logistics">Logistik / Industrie</option>
 <option data-site="living">Wohnanlage</option>
@@ -78,15 +82,15 @@
 <option data-site="other">Sonstiges</option></select>
 </div>
  <div class="full">
-<label for="message">Ihre Nachricht</label><textarea id="message" name="message" placeholder="Wie viele Personen nutzen den Standort? Wann wird Verpflegung benötigt?"></textarea>
+<label for="message">Ihre Nachricht</label><textarea class="field" id="message" name="message" maxlength="3000" placeholder="Wie viele Personen nutzen den Standort? Wann wird Verpflegung benötigt?"></textarea>
 </div>
- <div class="full">
-<label for="method">Kontaktweg</label><select class="field" id="method" name="method"><option value="email">E-Mail</option>
-<option value="whatsapp">WhatsApp</option></select>
+ <div class="full"><label for="phone">Telefonnummer (optional)</label><input class="field" id="phone" name="phone" type="tel" maxlength="40" autocomplete="tel" placeholder="+49 ..."></div>
+<div class="full"><label for="method">Gewünschter Rückmeldeweg</label><select class="field" id="method" name="method"><option value="E-Mail">E-Mail</option><option value="WhatsApp">WhatsApp</option></select></div>
 </div>
-</div>
- <label class="small" style="font-weight:500;margin:1rem 0"><input type="checkbox" required> Ich habe die Datenschutzerklärung gelesen und möchte meine Anfrage über den gewählten externen Dienst öffnen. <a href="../datenschutzerklarung/index.html">Datenschutz</a> *</label>
- <button type="submit" class="btn primary" style="width:100%">Anfrage im E-Mail-Programm öffnen ↗</button><p class="small muted" style="margin-top:.8rem">Ihr E-Mail-Programm oder WhatsApp wird geöffnet; der Versand erfolgt erst nach Ihrer Bestätigung.</p>
+ <label class="contact-consent"><input type="checkbox" name="privacy_acknowledged" value="yes" required> <span>Ich bin damit einverstanden, dass meine Anfrage zur Weiterleitung an LECKERDING an den externen Formulardienst FormSubmit übermittelt wird. Die <a href="../datenschutzerklarung/index.html">Datenschutzhinweise</a> habe ich gelesen. *</span></label>
+<button type="submit" class="btn primary form-submit">Anfrage absenden ↗</button>
+<p class="form-feedback" data-form-feedback role="status" aria-live="polite"></p>
+<p class="small muted">Sie bleiben auf dieser Seite. Die Anfrage wird erst nach einem Klick auf „Anfrage absenden“ übertragen.</p>
 </form></div></section></main><footer class="footer"><div class="wrap footer-grid">
  <div>
 <a class="logo footer-logo" href="../index.html"><img src="../assets/img/leckerding-logo.webp" alt="LECKERDING™ Logo mit Kochmützen-Maskottchen" width="504" height="800"></a><p class="small">Echte Mahlzeiten. Ohne Kantinenaufwand. Für Standorte in Berlin und Brandenburg.</p>

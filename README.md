@@ -22,8 +22,8 @@ Legal pages are **footer-only** on every page. Other existing live builder URLs 
 - Locally hosted fonts and QR code; no analytics, advertising cookies, remote fonts or embedded WhatsApp scripts.
 - DE and EN authored pages and language selector.
 - Interactive 3-step vending demo, site-type selector, partnership model selector, FAQs and food filters.
-- Floating WhatsApp messaging panel on all pages. The contact form opens the visitor's email client or WhatsApp with a prefilled message; it **does not silently send or store messages**.
-- Privacy preferences are available from the footer settings button. The chat opens on first visit and remembers a dismissal within the current tab.
+- Floating WhatsApp messaging panel on all pages. The contact form submits through an external FormSubmit endpoint after explicit acknowledgment; one-time activation of the recipient email is required.
+- Privacy preferences are available from the footer settings button. The WhatsApp panel opens only upon user interaction.
 
 ## Location enquiries and editorial pages
 
@@ -62,3 +62,11 @@ For launch, remove the preview-only `noindex` directive from the 24 content page
 - `dist/{index.html,sortiment/index.html,kontakt/index.html}`: German content
 - `dist/en/`: English content
 - `dist/assets/img/whatsapp-qr.svg`, `dist/assets/img/favicon.svg`: self-hosted icons
+
+## Contact form service (must activate before external launch)
+
+The German and English location-enquiry pages now POST to `https://formsubmit.co/ajax/info@leckerding.com` through JavaScript with a non-JavaScript fallback to `https://formsubmit.co/info@leckerding.com`. The site requires name, email and explicit form-transmission acknowledgment; a telephone number is required when WhatsApp is the preferred reply method. A honeypot field is provided and external reCAPTCHA is disabled to avoid loading additional tracking on the contact page. Form responses are surfaced inline with an honest accepted/error state; delivery is not asserted without a provider acknowledgement.
+
+**One-time activation:** Open the deployed contact page, send one low-sensitivity test enquiry, then confirm the activation message FormSubmit sends to `info@leckerding.com` (including the spam folder). Until that confirmation, enquiries are not delivered to the destination mailbox. Do not put personal visitor data into the form before activation and privacy review. Verify the provider's current retention, cross-border transfer terms and relevant GDPR processing agreements before public launch. The service is third-party; no backend secrets are committed to GitHub.
+
+If you need full control and European processing, the alternative is a PHP/SMTP backend on an IONOS Deploy Now **PHP** project with server-side spam protection and credentials in deployment secrets. The current Deploy Now project is static and does **not** execute PHP scripts.
