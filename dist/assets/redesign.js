@@ -16,7 +16,7 @@ if(mainNav){
  mainNav.innerHTML=item(href('index.html'),'Home','home')+
  '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-solutions">'+pick('Lösungen','Solutions')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-solutions" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FÜR STANDORTE','FOR LOCATIONS')+'</span><strong>'+pick('Gute Mahlzeiten. Weniger Aufwand.','Better meals. Less effort.')+'</strong><p>'+pick('Verpflegungslösungen für unterschiedliche Standorte.','Food vending solutions for different locations.')+'</p>'+item(href('standortloesungen/index.html'),pick('Alle Lösungen ansehen →','View solutions →'),'standortloesungen')+'</div><div class="nav-panel-links">'+item(href('sortiment/index.html'),pick('Sortiment','Menu'),'sortiment')+item(href('standortloesungen/index.html'),pick('Standortlösungen','Location solutions'),'standortloesungen')+item(root+'partnerschaftsmodelle/index.html',pick('Partnerschaftsmodelle','Partnership models (DE)'),'partnerschaftsmodelle')+item(root+'unserer-automat/index.html',pick('Unser Automat','How it works (DE)'),'unserer-automat')+'</div></div></div>'+
  item(href('ueber-uns/index.html'),pick('Unternehmen','Company'),'ueber-uns')+
- '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-insights">'+pick('Wissen','Insights')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-insights" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FRAGEN & EINBLICKE','HELP & IDEAS')+'</span><strong>'+pick('Wissenswertes rund um LECKERDING.','Everything worth knowing.')+'</strong><p>'+pick('Antworten und Beiträge rund um moderne Verpflegung.','Answers and articles about modern workplace meals.')+'</p>'+item(href('faq/index.html'),pick('Zur FAQ →','Explore FAQ →'),'faq')+'</div><div class="nav-panel-links">'+item(href('faq/index.html'),pick('Häufige Fragen','FAQ'),'faq')+item(href('blog/index.html'),pick('Blog & Beiträge','Journal'),'blog')+item(href('ueber-uns/index.html#shawn-veldhuis'),pick('Gründer kennenlernen','Meet the founder'),'ueber-uns')+item(root+'allergene/index.html',pick('Zutaten & Allergene','Allergens (DE)'),'allergene')+'</div></div></div>'+
+ '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-insights">'+pick('Wissen','Insights')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-insights" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FRAGEN & EINBLICKE','HELP & IDEAS')+'</span><strong>'+pick('Wissenswertes rund um LECKERDING.','Everything worth knowing.')+'</strong><p>'+pick('Antworten und Beiträge rund um moderne Verpflegung.','Answers and articles about modern workplace meals.')+'</p>'+item(href('faq/index.html'),pick('Zur FAQ →','Explore FAQ →'),'faq')+'</div><div class="nav-panel-links">'+item(href('faq/index.html'),pick('Häufige Fragen','FAQ'),'faq')+item(href('blog/index.html'),pick('Blog & Beiträge','Journal'),'blog')+item(href('ueber-uns/index.html#shawn-veldhuis'),pick('Gründer kennenlernen','Meet the founder'),'ueber-uns')+item(href('sortiment/index.html#gerichte'),pick('Gerichte & Allergene','Meals & allergens'),'allergene')+'</div></div></div>'+
  item(href('kontakt/index.html'),pick('Kontakt','Contact'),'kontakt');
  const triggers=[...mainNav.querySelectorAll('[data-nav-trigger]')];
  const hoverPointer=matchMedia('(hover: hover) and (pointer: fine)');
@@ -80,9 +80,40 @@ if(mainNav){
 const steps=[['🍲','Gericht auswählen','Choose a meal','Mahlzeit auf dem Touchscreen wählen.','Choose a meal on the touchscreen.'],['💳','Kontaktlos bezahlen','Pay contactlessly','Bequem bargeldlos zahlen.','Pay easily without cash.'],['♨️','Erhitzen oder mitnehmen','Heat or take away','Direkt heiß genießen oder gekühlt mitnehmen.','Enjoy it warm, or take it chilled.']];
 const models={self:['Selbstzahler-Modell','Self-pay model','Nutzer zahlen selbst. Wir prüfen gemeinsam, ob das Standortkonzept wirtschaftlich passt.','Customers pay for meals themselves. We assess whether the location is a good fit.'],subsidy:['Mitarbeiter-Zuschuss','Employee meal subsidy','Vergünstigte Mahlzeiten als Benefit, mit individuell abgestimmter Kosten- und Steuerstruktur.','Subsidised employee meals with an individually agreed cost and tax structure.'],rent:['Miet- oder Pauschalmodell','Rental or fixed-fee model','Eine vereinbarte Monatsgebühr schafft planbare Kosten.','An agreed monthly fee creates predictable costs.'],partner:['Individuelle Partnerschaft','Tailored partnership','Bei passenden Flächen prüfen wir Umsatz- oder Standortmodelle.','For suitable sites, we can consider revenue-sharing or location arrangements.']};
 document.querySelector('[data-model]')?.addEventListener('change',e=>{let m=models[e.target.value];document.querySelector('[data-model-title]').textContent=m[en?1:0];document.querySelector('[data-model-desc]').textContent=m[en?3:2]});
-let category='all';const foods=[...document.querySelectorAll('[data-meal-category]')],filters=[...document.querySelectorAll('[data-filter]')],search=document.querySelector('[data-search]'),allergen=document.querySelector('[data-allergen]');
-const filter=()=>{let n=0;foods.forEach(c=>{let valid=(category==='all'||c.dataset.mealCategory===category)&&(!search?.value||c.textContent.toLowerCase().includes(search.value.toLowerCase().trim()))&&(!allergen?.value||!c.dataset.allergens.split(' ').includes(allergen.value));c.hidden=!valid;if(valid)n++});let count=document.querySelector('[data-count]');if(count)count.textContent=n+pick(' Gerichte',' meals');let empty=document.querySelector('[data-empty]');if(empty)empty.hidden=n!==0};
-filters.forEach(btn=>btn.addEventListener('click',()=>{category=btn.dataset.filter;filters.forEach(x=>x.setAttribute('aria-pressed',String(x===btn)));filter()}));search?.addEventListener('input',filter);allergen?.addEventListener('change',filter);filter();
+let category='all';
+const foods=[...document.querySelectorAll('[data-meal-category]')];
+const filters=[...document.querySelectorAll('[data-filter]')];
+const search=document.querySelector('[data-search]');
+const allergen=document.querySelector('[data-allergen]');
+const normalise=s=>s.toLocaleLowerCase('de').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ß/g,'ss');
+const filter=()=>{
+ let count=0;
+ const query=normalise(search?.value.trim()||'');
+ for(const card of foods){
+  const kind=card.dataset.mealCategory;
+  const categoryMatches=category==='all'||kind===category||(category==='vegetarian'&&(kind==='vegan'||kind==='vegetarian'));
+  const allergyTokens=(card.dataset.allergens||'').split(' ');
+  const safeFilter=!allergen?.value||(!allergyTokens.includes(allergen.value)&&!allergyTokens.includes('unknown'));
+  const visible=categoryMatches&&(!query||normalise(card.textContent).includes(query))&&safeFilter;
+  card.hidden=!visible;if(visible)count++;
+ }
+ const label=document.querySelector('[data-count]');
+ if(label)label.textContent=count+pick(count===1?' Gericht':' Gerichte',count===1?' meal':' meals');
+ const empty=document.querySelector('[data-empty]');if(empty)empty.hidden=count!==0;
+};
+filters.forEach(btn=>btn.addEventListener('click',()=>{
+ category=btn.dataset.filter;
+ filters.forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+ filter();
+}));
+search?.addEventListener('input',filter);
+allergen?.addEventListener('change',filter);
+document.querySelector('[data-meal-reset]')?.addEventListener('click',()=>{
+ category='all';if(search)search.value='';if(allergen)allergen.value='';
+ filters.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter==='all')));
+ filter();search?.focus();
+});
+filter();
 const panel=document.querySelector('[data-chat]'),opener=document.querySelector('[data-chat-open]'),input=document.querySelector('[data-chat-input]');
 const composer = panel?.querySelector('[data-compose]');
 const chatPreference = 'leckerding-chat-dismissed';
@@ -130,6 +161,60 @@ if (sectors) {
   choose(buttons[0]);
   sectors.hidden = false;
 }
+
+/* Product demonstration: local-only state, no external analytics. */
+const machineFeatureButtons=[...document.querySelectorAll('[data-machine-feature]')];
+if(machineFeatureButtons.length){
+ const details=[
+ ['Kühlung','Die vorverpackten Mahlzeiten werden im gekühlten Bereich bereitgestellt. LECKERDING überwacht den Betrieb und kümmert sich um die vereinbarten Kontroll- und Serviceprozesse.'],
+ ['Erwärmung','Auf Wunsch erwärmt das Gerät die ausgewählte Mahlzeit direkt vor Ort. Die konkrete Erhitzung erfolgt nach dem für das Produkt vorgesehenen Verfahren.'],
+ ['Touchscreen & Zahlung','Die Gerichte lassen sich am Touchscreen auswählen und bargeldlos bezahlen. Zutaten, Allergene und Nährwerte stehen zusätzlich auf unserer Sortimentsseite.'],
+ ['Betreuung','LECKERDING koordiniert Bestückung, Reinigung, technische Prüfung und die vereinbarten betrieblichen Kontrollen – angepasst an den jeweiligen Standort.']
+ ];
+ machineFeatureButtons.forEach((button,i)=>button.addEventListener('click',()=>{
+   machineFeatureButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+   document.querySelector('[data-machine-feature-title]').textContent=details[i][0];
+   document.querySelector('[data-machine-feature-description]').textContent=details[i][1];
+ }));
+}
+const placementInfo={
+ indoor:['Mitten im Alltag','Ideal in Foyers, Pausenräumen, Lobbys, Wohnanlagen und anderen gut erreichbaren Innenbereichen. Entscheidend sind Platz, Stromanschluss, Belüftung und der Zugang zum Nachfüllen.',['Regulärer Stromanschluss','Gute Sichtbarkeit und Erreichbarkeit','Platz für Bedienung und Service'],'Innenbereich · Illustration'],
+ outdoor:['Auch geschützt draußen möglich','In geeigneten geschützten Außenbereichen kann der Automat eine Verpflegungslücke schließen – beispielsweise an überdachten Standorten. Die konkrete Machbarkeit prüfen wir immer individuell.',['Ausreichender Schutz vor Witterung','Geeignete Stromversorgung und Temperaturbedingungen','Sicherer Zugang für Nutzer und Service'],'Geschützter Außenbereich · Illustration']
+};
+const placementButtons=[...document.querySelectorAll('[data-placement]')];
+placementButtons.forEach(button=>button.addEventListener('click',()=>{
+ const key=button.dataset.placement;
+ const [title,copy,items,label]=placementInfo[key];
+ placementButtons.forEach(b=>b.setAttribute('aria-selected',String(b===button)));
+ document.querySelector('[data-placement-title]').textContent=title;
+ document.querySelector('[data-placement-copy]').textContent=copy;
+ const list=document.querySelector('[data-placement-list]');list.replaceChildren(...items.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
+ document.querySelector('[data-placement-scene]').dataset.placementScene=key;
+ document.querySelector('[data-placement-scene-label]').textContent=label;
+ document.getElementById('placement-panel')?.setAttribute('aria-labelledby',button.id);
+}));
+const partnerModels={
+ office:['Mehr Verpflegung für Ihr Team','Regelmäßige Nutzer, Pausenzeiten und ein möglicher Mitarbeiter-Benefit stehen im Vordergrund. Eine Pauschale, ein Zuschuss oder eine Kombination können infrage kommen.',[['Miet- oder Pauschalmodell','#partner-rent'],['Essenszuschuss','#partner-benefit']]],
+ living:['Mehr Komfort für Bewohner und Gäste','Ein zusätzliches Verpflegungsangebot ohne eigene Küche ist hier oft besonders interessant. Ein Service-Modell oder eine flexible Kombination kann passen.',[['Service-Modell','#partner-service'],['Individuelle Kombination','#partner-flex']]],
+ transit:['Für Menschen unterwegs','Wo viele Menschen kommen und gehen, kann eine individuelle Nutzung der Fläche oder eine Umsatzpartnerschaft sinnvoll sein.',[['Standort- oder Umsatzmodell','#partner-location'],['Service-Modell','#partner-service']]],
+ leisure:['Mehr Auswahl vor und nach Aktivitäten','Studios und Freizeiteinrichtungen können ihr Angebot mit vollständigen Mahlzeiten ergänzen – ohne selbst eine Küche betreiben zu müssen.',[['Service-Modell','#partner-service'],['Individuelle Kombination','#partner-flex']]]
+};
+const partnerButtons=[...document.querySelectorAll('[data-partner-match]')];
+partnerButtons.forEach(button=>button.addEventListener('click',()=>{
+ const data=partnerModels[button.dataset.partnerMatch];
+ partnerButtons.forEach(b=>b.setAttribute('aria-selected',String(b===button)));
+ document.querySelector('[data-match-title]').textContent=data[0];
+ document.querySelector('[data-match-description]').textContent=data[1];
+ const links=document.querySelector('[data-match-links]');
+ links.replaceChildren(...data[2].map(([label,href])=>{const a=document.createElement('a');a.href=href;a.textContent=label+' ↗';return a;}));
+ document.getElementById('match-panel')?.setAttribute('aria-labelledby',button.id);
+}));
+/* Progressive enhancement: content remains visible if JavaScript is disabled. */
+if('IntersectionObserver' in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('has-entered');observer.unobserve(entry.target);}}),{threshold:.1});
+ document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
+}
+
 const leadForm=document.querySelector('[data-lead-form]');
 if(leadForm){
  const params=new URLSearchParams(location.search);

@@ -1,5 +1,8 @@
 Options -Indexes
 DirectoryIndex index.html
+<IfModule mod_alias.c>
+  RedirectMatch 301 ^/allergene/?(index\.html)?$ /sortiment/#gerichte
+</IfModule>
 ErrorDocument 404 /404.html
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
