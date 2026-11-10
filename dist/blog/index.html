@@ -35,7 +35,12 @@
 <p class="eyebrow">LECKERDING JOURNAL</p>
 <h1>Gedanken zur<br>guten Mittagspause.</h1>
 <p class="lead">Unsere Beiträge zu Verpflegung, Entscheidungen und dem Alltag am Arbeitsplatz.</p>
-<div class="original-grid">
+<form class="journal-tools" data-blog-tools aria-label="Blog nach Datum filtern und sortieren" role="search">
+<div class="journal-field"><label for="blog-from">Ab Datum</label><input id="blog-from" type="date" data-blog-from></div>
+<div class="journal-field"><label for="blog-to">Bis Datum</label><input id="blog-to" type="date" data-blog-to></div>
+<div class="journal-field"><label for="blog-order">Sortieren</label><select id="blog-order" data-blog-order><option value="desc">Neueste zuerst</option><option value="asc">Älteste zuerst</option></select></div>
+<button class="btn outline" type="reset" data-blog-reset>Filter zurücksetzen</button><p class="journal-count" data-blog-count role="status" aria-live="polite"></p></form>
+<p class="journal-empty" data-blog-empty hidden>Für diesen Zeitraum gibt es keine Beiträge. Bitte wählen Sie einen anderen Zeitraum.</p><div class="original-grid" data-blog-grid>
 <article class="original-card"><a href="/blog/welches-lunch-modell-passt/"><img src="../assets/img/blog-welches-lunch-modell-passt.webp" alt="Das LECKERDING-Maskottchen mit Checkliste und fünf Symbolen für Teamgröße, Pausenzeiten, Aufwand, Budget und Service." width="1000" loading="lazy"></a><p class="article-byline"><time datetime="2026-06-10T20:01:21+02:00">10. Juni 2026</time> · Von <a rel="author" href="../ueber-uns/index.html#shawn-veldhuis">Shawn Veldhuis</a></p>
 <h2><a href="/blog/welches-lunch-modell-passt/">Welches Lunch-Modell passt?</a></h2>
 <p>Ein pragmischer 5-Faktoren-Check für HR, Office Management und Operations, um Lunch-Modelle objektiv zu vergleichen und schneller fundierte Entscheidungen zu treffen.</p>

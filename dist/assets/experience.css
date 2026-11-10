@@ -157,3 +157,7 @@
 /* Regional service messaging without a fictitious minute-by-minute boundary. */
 .area-visual{min-height:19rem;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(2rem,5vw,4rem);background:#e0edcd;color:var(--dark);border:1px solid #b4d1b5}.area-visual-overline{font-size:.77rem;font-weight:850;letter-spacing:.12em}.area-visual strong{font:800 clamp(3rem,6vw,6rem)/.94 var(--display);margin:1.2rem 0}.area-visual strong span{color:var(--green)}.area-visual p{max-width:32rem}.area-visual .btn{border-color:var(--dark)}
 @media(max-width:760px){.area-visual{min-height:15rem}}
+
+/* Journal date range controls: reusable for newly published articles. */
+.journal-tools{display:flex;flex-wrap:wrap;align-items:end;gap:.9rem 1.1rem;background:#edf1e5;border:1px solid var(--line);padding:clamp(1.1rem,3vw,1.7rem);margin:2rem 0 1.5rem}.journal-field{min-width:10rem;flex:1 1 10rem}.journal-field label{display:block;font-size:.77rem;text-transform:uppercase;letter-spacing:.06em;font-weight:850;margin-bottom:.35rem}.journal-field input,.journal-field select{display:block;width:100%;border:1px solid #94a991;background:#fffef8;color:var(--dark);padding:.7rem .65rem;min-height:2.9rem;font:inherit;border-radius:0}.journal-tools .btn{min-height:2.9rem}.journal-count{width:100%;margin:0;font-size:.85rem;font-weight:800;color:var(--green)}.journal-empty{padding:1.5rem;border:1px dashed var(--green)}.original-card[hidden]{display:none!important}
+@media(max-width:760px){.journal-field{flex:1 1 100%}.journal-tools .btn{width:100%}}

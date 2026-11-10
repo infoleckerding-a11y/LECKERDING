@@ -185,4 +185,24 @@ if (faqSearch) {
   searchFaq();
 }
 
+/* Journal dates come only from each article's authored <time datetime> attribute. */
+const blogGrid=document.querySelector('[data-blog-grid]');
+const blogTools=document.querySelector('[data-blog-tools]');
+if(blogGrid&&blogTools){
+ const cards=[...blogGrid.querySelectorAll('.original-card')];
+ const from=blogTools.querySelector('[data-blog-from]'),to=blogTools.querySelector('[data-blog-to]'),order=blogTools.querySelector('[data-blog-order]');
+ const count=blogTools.querySelector('[data-blog-count]'),empty=document.querySelector('[data-blog-empty]');
+ const posts=cards.map((node,index)=>({node,index,iso:node.querySelector('time[datetime]')?.getAttribute('datetime')||'',stamp:Date.parse(node.querySelector('time[datetime]')?.dateTime||'')||0}));
+ const dates=posts.map(p=>p.iso.slice(0,10)).filter(Boolean).sort();if(dates.length){from.min=dates[0];to.max=dates[dates.length-1];}
+ function updateJournal(){
+  const sorted=[...posts].sort((a,b)=>(order.value==='asc'?1:-1)*(a.stamp-b.stamp)||a.index-b.index);
+  let visible=0;
+  for(const post of sorted){const date=post.iso.slice(0,10);const show=(!from.value||date>=from.value)&&(!to.value||date<=to.value);post.node.hidden=!show;if(show)visible++;blogGrid.appendChild(post.node);}
+  count.textContent=visible+' '+pick(visible===1?'Beitrag':'Beiträge',visible===1?'article':'articles');
+  if(empty)empty.hidden=visible>0;
+ }
+ for(const control of [from,to,order])control.addEventListener('change',updateJournal);
+ blogTools.addEventListener('reset',()=>requestAnimationFrame(updateJournal));
+ updateJournal();
+}
 })();
