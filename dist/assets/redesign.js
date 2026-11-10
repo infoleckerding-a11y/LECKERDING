@@ -5,21 +5,77 @@ const menu=document.querySelector('[data-menu]'),toggle=document.querySelector('
 toggle?.addEventListener('click',()=>{let open=menu.dataset.open==='true';menu.dataset.open=String(!open);toggle.setAttribute('aria-expanded',String(!open))});
 const steps=[['🍲','Gericht auswählen','Choose a meal','Mahlzeit auf dem Touchscreen wählen.','Choose a meal on the touchscreen.'],['💳','Kontaktlos bezahlen','Pay contactlessly','Bequem bargeldlos zahlen.','Pay easily without cash.'],['♨️','Erhitzen oder mitnehmen','Heat or take away','Direkt heiß genießen oder gekühlt mitnehmen.','Enjoy it warm, or take it chilled.']];
 document.querySelectorAll('[data-step]').forEach(btn=>btn.addEventListener('click',()=>{const n=Number(btn.dataset.step),s=steps[n];document.querySelectorAll('[data-step]').forEach(x=>x.setAttribute('aria-selected',String(x===btn)));let view=document.querySelector('[data-step-preview]');if(!view)return;view.querySelector('.emoji').textContent=s[0];view.querySelector('h3').textContent=s[en?2:1];view.querySelector('p').textContent=s[en?4:3];view.querySelector('.counter').textContent='0'+(n+1)+'/03'}));
-const loc={office:['🏢','Büros & Coworking','Offices & coworking','Warme Mahlzeiten zwischen Meetings, auch wenn die Kantine geschlossen ist.','Hot meals between meetings, even when the canteen is closed.'],logistics:['🏭','Logistik & Schichtbetrieb','Logistics & shift work','Zuverlässige Verpflegung bei Früh-, Spät- und Nachtschichten.','Reliable food for early, late and night shifts.'],living:['🏠','Wohnheime & Micro-Living','Residences & micro-living','Für lange Lernabende und Standorte ohne Restaurant.','For late study nights and buildings without restaurants.'],hotel:['🏨','Hotels & Hostels','Hotels & hostels','Ein zusätzliches Angebot für spät anreisende Gäste.','An additional service for guests arriving late.'],campus:['🎓','Campus & Bildung','Campuses & education','Eine warme Alternative rund um Vorlesungen und Lernzeiten.','Warm meals around lectures and study sessions.'],fitness:['🏋️','Fitness & Freizeit','Fitness & leisure','Eine vollständige Mahlzeit nach dem Training.','A complete meal after a workout.']};
-document.querySelectorAll('[data-location]').forEach(btn=>btn.addEventListener('click',()=>{let s=loc[btn.dataset.location];if(!s)return;document.querySelectorAll('[data-location]').forEach(x=>x.setAttribute('aria-pressed',String(x===btn)));document.querySelector('[data-location-symbol]').textContent=s[0];document.querySelector('[data-location-title]').textContent=s[en?2:1];document.querySelector('[data-location-desc]').textContent=s[en?4:3]}));
 const models={self:['Selbstzahler-Modell','Self-pay model','Nutzer zahlen selbst. Wir prüfen gemeinsam, ob das Standortkonzept wirtschaftlich passt.','Customers pay for meals themselves. We assess whether the location is a good fit.'],subsidy:['Mitarbeiter-Zuschuss','Employee meal subsidy','Vergünstigte Mahlzeiten als Benefit, mit individuell abgestimmter Kosten- und Steuerstruktur.','Subsidised employee meals with an individually agreed cost and tax structure.'],rent:['Miet- oder Pauschalmodell','Rental or fixed-fee model','Eine vereinbarte Monatsgebühr schafft planbare Kosten.','An agreed monthly fee creates predictable costs.'],partner:['Individuelle Partnerschaft','Tailored partnership','Bei passenden Flächen prüfen wir Umsatz- oder Standortmodelle.','For suitable sites, we can consider revenue-sharing or location arrangements.']};
 document.querySelector('[data-model]')?.addEventListener('change',e=>{let m=models[e.target.value];document.querySelector('[data-model-title]').textContent=m[en?1:0];document.querySelector('[data-model-desc]').textContent=m[en?3:2]});
 let category='all';const foods=[...document.querySelectorAll('[data-meal-category]')],filters=[...document.querySelectorAll('[data-filter]')],search=document.querySelector('[data-search]'),allergen=document.querySelector('[data-allergen]');
 const filter=()=>{let n=0;foods.forEach(c=>{let valid=(category==='all'||c.dataset.mealCategory===category)&&(!search?.value||c.textContent.toLowerCase().includes(search.value.toLowerCase().trim()))&&(!allergen?.value||!c.dataset.allergens.split(' ').includes(allergen.value));c.hidden=!valid;if(valid)n++});let count=document.querySelector('[data-count]');if(count)count.textContent=n+pick(' Gerichte',' meals');let empty=document.querySelector('[data-empty]');if(empty)empty.hidden=n!==0};
 filters.forEach(btn=>btn.addEventListener('click',()=>{category=btn.dataset.filter;filters.forEach(x=>x.setAttribute('aria-pressed',String(x===btn)));filter()}));search?.addEventListener('input',filter);allergen?.addEventListener('change',filter);filter();
 const panel=document.querySelector('[data-chat]'),opener=document.querySelector('[data-chat-open]'),input=document.querySelector('[data-chat-input]');
-function chat(open){if(!panel||!opener)return;panel.hidden=!open;opener.setAttribute('aria-expanded',String(open));if(open)input?.focus();else opener.focus()}
-opener?.addEventListener('click',()=>chat(panel.hidden));document.querySelector('[data-chat-close]')?.addEventListener('click',()=>chat(false));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&panel&&!panel.hidden)chat(false)});
-document.querySelectorAll('[data-prompt]').forEach(btn=>btn.addEventListener('click',()=>{input.value=btn.dataset.prompt;input.focus()}));
+const composer = panel?.querySelector('[data-compose]');
+const chatPreference = 'leckerding-chat-dismissed';
+function showChat(open, remember = false) {
+  if (!panel || !opener) return;
+  panel.hidden = !open;
+  opener.setAttribute('aria-expanded', String(open));
+  if (remember) {
+    try {
+      if (open) sessionStorage.removeItem(chatPreference);
+      else sessionStorage.setItem(chatPreference, 'yes');
+    } catch {}
+    (open ? panel.querySelector('[data-chat-close]') : opener)?.focus();
+  }
+}
+let dismissed = false;
+try { dismissed = sessionStorage.getItem(chatPreference) === 'yes'; } catch {}
+showChat(!dismissed);
+opener?.addEventListener('click', () => showChat(panel.hidden, true));
+panel?.querySelector('[data-chat-close]')?.addEventListener('click', () => showChat(false, true));
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && panel && !panel.hidden) showChat(false, true);
+});
+document.querySelectorAll('[data-prompt]').forEach(button => {
+  button.addEventListener('click', () => {
+    composer.hidden = false;
+    for (const prompt of panel.querySelectorAll('[data-prompt]')) {
+      prompt.setAttribute('aria-expanded', String(prompt === button));
+    }
+    if (button.dataset.prompt || !input.value) input.value = button.dataset.prompt;
+    input.focus();
+  });
+});
+const sectors = document.querySelector('[data-sector-buttons]');
+if (sectors) {
+  const buttons = [...sectors.querySelectorAll('[data-sector]')];
+  function choose(button) {
+    for (const item of buttons) {
+      const active = item === button;
+      item.setAttribute('aria-pressed', String(active));
+      document.getElementById(item.getAttribute('aria-controls')).hidden = !active;
+    }
+  }
+  buttons.forEach(button => button.addEventListener('click', () => choose(button)));
+  choose(buttons[0]);
+  sectors.hidden = false;
+}
+const leadForm = document.querySelector('[data-lead-form]');
+if (leadForm) {
+  const params = new URLSearchParams(location.search);
+  const option = [...leadForm.elements.type.options].find(item => item.dataset.site === params.get('site') && item.dataset.site);
+  if (option) {
+    option.selected = true;
+    const topic = params.get('topic');
+    if (topic) leadForm.elements.message.value = pick('Ich interessiere mich für einen Standort im Bereich ', 'I am interested in a location for ') + topic.slice(0,100) + '.';
+  }
+  leadForm.elements.method.addEventListener('change', () => {
+    leadForm.querySelector('[type=submit]').textContent = leadForm.elements.method.value === 'whatsapp'
+      ? pick('Anfrage in WhatsApp öffnen ↗','Open enquiry in WhatsApp ↗')
+      : pick('Anfrage im E-Mail-Programm öffnen ↗','Open enquiry in my email app ↗');
+  });
+}
 function openWhatsApp(text){window.open(wa+'?text='+encodeURIComponent(text),'_blank','noopener,noreferrer')}
 document.querySelector('[data-chat-send]')?.addEventListener('click',()=>{let msg=input.value.trim();if(msg)openWhatsApp(msg);else input.focus()});
-document.querySelector('[data-lead-form]')?.addEventListener('submit',e=>{e.preventDefault();const form=e.target;if(!form.reportValidity())return;let f=new FormData(form),msg=pick('Hallo LECKERDING, ich möchte einen Standort prüfen lassen.','Hello LECKERDING, I would like to discuss a location.')+'\n\n'+['Name: '+f.get('name'),'Email: '+f.get('email'),pick('Standort: ','Location: ')+f.get('location'),pick('Standortart: ','Site type: ')+f.get('type'),pick('Nachricht: ','Message: ')+f.get('message')].join('\n');if(f.get('method')==='whatsapp')openWhatsApp(msg);else window.location.href='mailto:info@leckerding.com?subject='+encodeURIComponent('LECKERDING location enquiry')+'&body='+encodeURIComponent(msg)});
-const key='leckerding-privacy-v1',banner=document.querySelector('[data-cookie]');try{if(!localStorage.getItem(key)&&banner)banner.hidden=false}catch{if(banner)banner.hidden=false}
+document.querySelector('[data-lead-form]')?.addEventListener('submit',e=>{e.preventDefault();const form=e.target;if(!form.reportValidity())return;let f=new FormData(form),msg=pick('Hallo LECKERDING, ich möchte einen Standort prüfen lassen.','Hello LECKERDING, I would like to discuss a location.')+'\n\n'+['Name: '+f.get('name'),'Email: '+f.get('email'),pick('Standort: ','Location: ')+f.get('location'),pick('Standortart: ','Site type: ')+f.get('type'),pick('Nachricht: ','Message: ')+f.get('message')].join('\n');if(f.get('method')==='whatsapp')openWhatsApp(msg);else window.location.href='mailto:info@leckerding.com?subject='+encodeURIComponent(pick('Standortanfrage an LECKERDING','LECKERDING location enquiry'))+'&body='+encodeURIComponent(msg)});
+const key='leckerding-privacy-v1',banner=document.querySelector('[data-cookie]');
 document.querySelectorAll('[data-consent]').forEach(btn=>btn.addEventListener('click',()=>{try{localStorage.setItem(key,btn.dataset.consent);if(btn.dataset.consent==='functional')localStorage.setItem('leckerding-language',en?'en':'de');else localStorage.removeItem('leckerding-language')}catch{}if(banner)banner.hidden=true}));
 document.querySelectorAll('[data-settings]').forEach(btn=>btn.addEventListener('click',()=>{if(banner){banner.hidden=false;banner.querySelector('button')?.focus()}}));
 })();

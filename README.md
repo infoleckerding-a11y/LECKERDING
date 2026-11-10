@@ -18,12 +18,18 @@ Legal pages are **footer-only** on every page. Other existing live builder URLs 
 ## Design / features
 
 - Beige (#faf8ef), dark green (#202e25), leaf green (#415b3a), sage green (#d9e6a8); square borders and controls.
-- Existing optimized food/machine/mascot assets; mascot displayed with `object-fit: contain`. A new monogram favicon prevents the cropped-head issue.
+- Existing optimized food/machine/mascot assets; mascot displayed with `object-fit: contain`. The favicon, header and footer use the complete LECKERDING logo.
 - Locally hosted fonts and QR code; no analytics, advertising cookies, remote fonts or embedded WhatsApp scripts.
 - DE and EN authored pages and language selector.
 - Interactive 3-step vending demo, site-type selector, partnership model selector, FAQs and food filters.
 - Floating WhatsApp messaging panel on all pages. The contact form opens the visitor's email client or WhatsApp with a prefilled message; it **does not silently send or store messages**.
-- Cookie/privacy preference notice and footer settings button.
+- Privacy preferences are available from the footer settings button. The chat opens on first visit and remembers a dismissal within the current tab.
+
+## Location enquiries and editorial pages
+
+The IONOS preview is linked to this review branch. Home and Standortlösungen present six venue types with enquiry links that preselect the relevant site type. FAQ contains 27 questions in each language. The blog includes three paired articles. Use the visible homepage video link to reach the 28-second machine demonstration.
+
+The service-area map estimates a 75-minute one-way drive from Warschauer Straße 59A. Road-network estimates from OSRM cover 1,369 grid points plus 23 town centres and exclude live traffic. The map is clipped to Berlin and Brandenburg. Map attribution is displayed on the map and linked beneath it.
 
 ## Preview locally
 
@@ -39,7 +45,7 @@ Visit `http://localhost:8000/` and `http://localhost:8000/en/`. Check navigation
 
 **Do not merge until reviewed.** The original `main` branch remains the IONOS deployment source. When ready, merge the PR and verify IONOS Deploy Now's configured publish directory is `dist` with no build command. Take a backup of the IONOS builder pages before attaching the production domain and verify email/DNS records remain unchanged. This PR does not modify DNS.
 
-For launch, replace `noindex,nofollow` in all page heads after testing (keep it on the review branch for now). Confirm legacy links, canonical URL redirects, both `www` and apex domain, HTTPS and cookie functionality. The static redirects are not HTTP 301s; for SEO, configure proper redirects in the hosting environment.
+For launch, remove the preview-only `noindex` directive from the 24 content pages listed in `dist/sitemap.xml`. Keep compatibility redirects excluded. Canonical and hreflang URLs point to the intended www.leckerding.com domain. Submit the sitemap in Search Console after cutover. Confirm legacy links, canonical URL redirects, both `www` and apex domain, HTTPS and cookie functionality. The static redirects are not HTTP 301s; for SEO, configure proper redirects in the hosting environment.
 
 ## Important publication checks
 
