@@ -29,7 +29,7 @@ Legal pages are **footer-only** on every page. Other existing live builder URLs 
 
 The IONOS preview is linked to this review branch. Home and Standortlösungen present six venue types with enquiry links that preselect the relevant site type. FAQ contains 27 questions in each language. The blog includes three paired articles. Use the visible homepage video link to reach the 28-second machine demonstration.
 
-The service-area map estimates a 75-minute one-way drive from Warschauer Straße 59A. Road-network estimates from OSRM cover 1,369 grid points plus 23 town centres and exclude live traffic. The map is clipped to Berlin and Brandenburg. Map attribution is displayed on the map and linked beneath it.
+The original, self-hosted regional map (dist/assets/img/service-area-75.svg) is shown on the homepage and Standortlösungen page. It is accompanied by a clear orientation-only caption: the displayed area is not a fixed boundary, and LECKERDING reviews enquiries across Berlin and Brandenburg individually. The map retains its original visual labels and attribution.
 
 ## Preview locally
 
@@ -52,8 +52,9 @@ For launch, remove the preview-only `noindex` directive from the 24 content page
 1. **Terms:** The live AGB contained incomplete online shop language. The German draft preserves all section topics but **condenses** some payment/provider passages; obtain a suitable legally reviewed version for vending sales and B2B placement before going live. The English AGB is an explanatory overview, **not** a binding full translation.
 2. **Privacy:** Verify final IONOS hosting logs, retention, any additional cookies/processors and the precise legal wording. The visitor's WhatsApp message opens in an external client; no chat backend is installed.
 3. **Product declarations:** The 3 meals and declared allergens reflect the previous prototype examples; verify against current supplier packaging before using for QR-code customer disclosures. These examples are **not** a complete regulatory allergen catalogue.
-4. **WhatsApp:** Confirm +49 155 11546761 is WhatsApp-enabled. QR destination is `https://wa.me/4915511546761`.
-5. **Images:** Confirm commercial usage rights for the images in the original repository.
+4. **Photography and artwork:** LECKERDING confirms that all currently used website images are its own brand assets and that no stock images are in use. The homepage now uses the previously included locally hosted machine illustration (assets/img/automat.webp) while a new image is prepared.
+5. **WhatsApp:** Confirm +49 155 11546761 is WhatsApp-enabled. QR destination is `https://wa.me/4915511546761`.
+6. **Image management:** Only use approved LECKERDING-owned original artwork or photography in future updates; maintain a record of originals and attribution where relevant.
 
 ## Edit locations
 
@@ -70,3 +71,11 @@ The German and English location-enquiry pages now POST to `https://formsubmit.co
 **One-time activation:** Open the deployed contact page, send one low-sensitivity test enquiry, then confirm the activation message FormSubmit sends to `info@leckerding.com` (including the spam folder). Until that confirmation, enquiries are not delivered to the destination mailbox. Do not put personal visitor data into the form before activation and privacy review. Verify the provider's current retention, cross-border transfer terms and relevant GDPR processing agreements before public launch. The service is third-party; no backend secrets are committed to GitHub.
 
 If you need full control and European processing, the alternative is a PHP/SMTP backend on an IONOS Deploy Now **PHP** project with server-side spam protection and credentials in deployment secrets. The current Deploy Now project is static and does **not** execute PHP scripts.
+
+## November 2026 usability and content revision
+
+- Fixed desktop dropdown disappearing when moving the pointer off the trigger: the menu closes only after leaving the full header/panel, with a 350 ms grace period, and desktop clicks hold the menu open. Mobile click, keyboard Escape, outside click and keyboard focus remain supported.
+- Reinstated the locally held regional map on both the German and English home/location pages, without the overly specific driving-time statement in nearby text.
+- Restored the previous larger home-page vending machine illustration from the existing first-generation local asset.
+- Expanded all six Standortlösungen scenarios in German and English using the original site's audience-specific messages, with three scannable takeaways in each panel.
+- Ownership clarification supplied by LECKERDING: current published imagery is company-owned, not stock imagery. No externally hosted image or new stock asset was added.
