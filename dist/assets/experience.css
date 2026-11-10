@@ -164,3 +164,30 @@
 
 /* Accessible contact form, spam honeypot and honest delivery feedback. */
 .form-trap{position:absolute!important;width:1px;height:1px;opacity:0;overflow:hidden;clip-path:inset(50%);pointer-events:none}.contact-consent{display:flex!important;align-items:flex-start;gap:.7rem;margin:1.3rem 0!important;font-size:.87rem!important;line-height:1.5;font-weight:500!important}.contact-consent input{margin:.28rem 0 0;flex:none;width:1rem;height:1rem;accent-color:var(--green)}.contact-consent span{display:block}.contact-consent a{text-decoration:underline}.form-submit{width:100%;min-height:3.3rem;cursor:pointer}.form-submit:disabled{opacity:.65;cursor:wait}.form-feedback{min-height:1.3rem;margin:.8rem 0 0;font-size:.87rem;font-weight:700}.form-feedback.is-success{border-left:4px solid var(--green);background:#e8f2e0;padding:.8rem;color:var(--dark)}.form-feedback.is-error{border-left:4px solid #a33125;background:#fbeae7;padding:.8rem;color:#742219}
+
+/* Navigation fix: keep the desktop mega menu open while moving from a
+   trigger through the wrapped header into its dropdown. The header and
+   dropdown form one continuous hover destination; JS handles delayed exit. */
+@media(min-width:761px){
+ .header .head-inner{isolation:isolate}
+ .nav-mega .nav-panel:not([hidden]){top:calc(100% - 1px);z-index:60}
+ .nav-mega .nav-panel-links a{min-height:2.85rem;display:flex;align-items:center}
+ .nav-mega .nav-panel-links a:hover,.nav-mega .nav-panel-links a:focus-visible{background:#e1e8da;padding-inline:.5rem}
+ .nav-mega .nav-group{align-self:stretch;display:flex;align-items:center}
+}
+.nav-mega .nav-trigger:focus-visible,.nav-mega .nav-panel a:focus-visible{outline:3px solid #24664e;outline-offset:2px}
+/* Context from the original Standortlösungen cards, with the original
+   feature takeaways and longer location-specific rationale. */
+.sector-case p:not(.eyebrow),.sector-fit p:not(.eyebrow){line-height:1.75;max-width:62ch}
+.sector-fit{display:flex;flex-direction:column;align-items:flex-start}
+.sector-fit .btn{margin-top:auto}
+.sector-points{list-style:none;padding:0;margin:.8rem 0 1.55rem;display:flex;flex-wrap:wrap;gap:.45rem}
+.sector-points li{border:1px solid #b5c8a6;background:#eef4df;color:#1c4835;padding:.36rem .62rem;font-size:.78rem;font-weight:750}
+.sector-points li::before{content:"✓";margin-right:.35rem;color:#1d6841}
+/* Reinstated locally hosted map, without describing it as a fixed limit. */
+.area-map{margin:0;min-width:0}
+.area-map a{display:block;border:1px solid #acc3a6;background:#edf2e6}
+.area-map img{display:block;width:100%;height:auto;object-fit:contain}
+.area-map figcaption{font-size:.82rem;line-height:1.5;color:#e5eedc;margin-top:.8rem}
+.area-map a:focus-visible{outline:3px solid #daf58f;outline-offset:3px}
+@media(max-width:760px){.sector-fit .btn{margin-top:0}}

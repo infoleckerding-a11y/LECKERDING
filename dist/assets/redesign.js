@@ -19,22 +19,51 @@ if(mainNav){
  '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-insights">'+pick('Wissen','Insights')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-insights" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FRAGEN & EINBLICKE','HELP & IDEAS')+'</span><strong>'+pick('Wissenswertes rund um LECKERDING.','Everything worth knowing.')+'</strong><p>'+pick('Antworten und Beiträge rund um moderne Verpflegung.','Answers and articles about modern workplace meals.')+'</p>'+item(href('faq/index.html'),pick('Zur FAQ →','Explore FAQ →'),'faq')+'</div><div class="nav-panel-links">'+item(href('faq/index.html'),pick('Häufige Fragen','FAQ'),'faq')+item(href('blog/index.html'),pick('Blog & Beiträge','Journal'),'blog')+item(href('ueber-uns/index.html#shawn-veldhuis'),pick('Gründer kennenlernen','Meet the founder'),'ueber-uns')+item(root+'allergene/index.html',pick('Zutaten & Allergene','Allergens (DE)'),'allergene')+'</div></div></div>'+
  item(href('kontakt/index.html'),pick('Kontakt','Contact'),'kontakt');
  const triggers=[...mainNav.querySelectorAll('[data-nav-trigger]')];
- const close=()=>triggers.forEach(btn=>{btn.setAttribute('aria-expanded','false');document.getElementById(btn.getAttribute('aria-controls')).hidden=true;});
- triggers.forEach(btn=>btn.addEventListener('click',()=>{const next=btn.getAttribute('aria-expanded')!=='true';close();btn.setAttribute('aria-expanded',String(next));document.getElementById(btn.getAttribute('aria-controls')).hidden=!next;}));
- document.addEventListener('click',event=>{if(!event.target.closest('.nav-group'))close();});
- document.addEventListener('keydown',event=>{if(event.key==='Escape'){const open=triggers.find(b=>b.getAttribute('aria-expanded')==='true');if(open){close();open.focus();}}});
- /* On desktop, the panels open on hover just like a corporate mega-menu.
-    Click remains available for keyboard, touch and pointer users. */
  const hoverPointer=matchMedia('(hover: hover) and (pointer: fine)');
- for(const btn of triggers){
-   const group=btn.closest('.nav-group');
-   group.addEventListener('mouseenter',()=>{
-     if(!hoverPointer.matches)return;
-     close();btn.setAttribute('aria-expanded','true');
-     document.getElementById(btn.getAttribute('aria-controls')).hidden=false;
+ const header=mainNav.closest('.header');
+ let leaveTimer;
+ const cancelLeave=()=>{window.clearTimeout(leaveTimer);leaveTimer=undefined;};
+ const close=()=>{cancelLeave();for(const btn of triggers){btn.setAttribute('aria-expanded','false');document.getElementById(btn.getAttribute('aria-controls')).hidden=true;}};
+ const open=btn=>{
+   cancelLeave();
+   for(const other of triggers){
+     const selected=btn===other;
+     other.setAttribute('aria-expanded',String(selected));
+     document.getElementById(other.getAttribute('aria-controls')).hidden=!selected;
+   }
+ };
+ const scheduleClose=()=>{
+   if(!hoverPointer.matches)return;
+   cancelLeave();
+   // Intentional grace period: moving from the trigger into an absolutely
+   // positioned mega-panel must not dismiss it while crossing the header.
+   leaveTimer=window.setTimeout(()=>{
+     if(!header?.matches(':hover') && !mainNav.matches(':focus-within'))close();
+   },350);
+ };
+ triggers.forEach(btn=>{
+   btn.addEventListener('click',()=>{
+     // A desktop click must never dismiss a menu that just opened on hover.
+     if(hoverPointer.matches){open(btn);return;}
+     btn.getAttribute('aria-expanded')==='true'?close():open(btn);
    });
-   group.addEventListener('mouseleave',()=>{if(hoverPointer.matches)close();});
- }
+   btn.addEventListener('mouseenter',()=>{if(hoverPointer.matches)open(btn);});
+   btn.closest('.nav-group').querySelector('.nav-panel').addEventListener('mouseenter',cancelLeave);
+ });
+ // Close only after leaving the complete header / panel, not after leaving
+ // the much smaller trigger group. Mobile remains click-operated.
+ header?.addEventListener('mouseenter',cancelLeave);
+ header?.addEventListener('mouseleave',scheduleClose);
+ document.addEventListener('click',event=>{if(!event.target.closest('.header'))close();});
+ document.addEventListener('keydown',event=>{
+   if(event.key==='Escape'){
+     const active=triggers.find(btn=>btn.getAttribute('aria-expanded')==='true');
+     if(active){close();active.focus();}
+   }
+ });
+ mainNav.addEventListener('focusout',event=>{
+   if(event.relatedTarget && !header?.contains(event.relatedTarget))close();
+ });
  /* Keep readers on the matching page when switching languages. */
  const languageLinks=document.querySelectorAll('.lang a[lang]');
  if(languageLinks.length){
