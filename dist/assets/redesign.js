@@ -16,7 +16,7 @@ if(mainNav){
  mainNav.innerHTML=item(href('index.html'),'Home','home')+
  '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-solutions">'+pick('Lösungen','Solutions')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-solutions" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FÜR STANDORTE','FOR LOCATIONS')+'</span><strong>'+pick('Gute Mahlzeiten. Weniger Aufwand.','Better meals. Less effort.')+'</strong><p>'+pick('Verpflegungslösungen für unterschiedliche Standorte.','Food vending solutions for different locations.')+'</p>'+item(href('standortloesungen/index.html'),pick('Alle Lösungen ansehen →','View solutions →'),'standortloesungen')+'</div><div class="nav-panel-links">'+item(href('sortiment/index.html'),pick('Sortiment','Menu'),'sortiment')+item(href('standortloesungen/index.html'),pick('Standortlösungen','Location solutions'),'standortloesungen')+item(root+'partnerschaftsmodelle/index.html',pick('Partnerschaftsmodelle','Partnership models (DE)'),'partnerschaftsmodelle')+item(root+'unserer-automat/index.html',pick('Unser Automat','How it works (DE)'),'unserer-automat')+'</div></div></div>'+
  item(href('ueber-uns/index.html'),pick('Unternehmen','Company'),'ueber-uns')+
- '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-insights">'+pick('Wissen','Insights')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-insights" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FRAGEN & EINBLICKE','HELP & IDEAS')+'</span><strong>'+pick('Wissenswertes rund um LECKERDING.','Everything worth knowing.')+'</strong><p>'+pick('Antworten und Beiträge rund um moderne Verpflegung.','Answers and articles about modern workplace meals.')+'</p>'+item(href('faq/index.html'),pick('Zur FAQ →','Explore FAQ →'),'faq')+'</div><div class="nav-panel-links">'+item(href('faq/index.html'),pick('Häufige Fragen','FAQ'),'faq')+item(href('blog/index.html'),pick('Blog & Beiträge','Journal'),'blog')+item(href('ueber-uns/index.html#shawn-veldhuis'),pick('Gründer kennenlernen','Meet the founder'),'ueber-uns')+item(root+'allergene/index.html',pick('Zutaten & Allergene','Allergens (DE)'),'allergene')+'</div></div></div>'+
+ '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-insights">'+pick('Wissen','Insights')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-insights" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FRAGEN & EINBLICKE','HELP & IDEAS')+'</span><strong>'+pick('Wissenswertes rund um LECKERDING.','Everything worth knowing.')+'</strong><p>'+pick('Antworten und Beiträge rund um moderne Verpflegung.','Answers and articles about modern workplace meals.')+'</p>'+item(href('faq/index.html'),pick('Zur FAQ →','Explore FAQ →'),'faq')+'</div><div class="nav-panel-links">'+item(href('faq/index.html'),pick('Häufige Fragen','FAQ'),'faq')+item(href('blog/index.html'),pick('Blog & Beiträge','Journal'),'blog')+item(href('ueber-uns/index.html#shawn-veldhuis'),pick('Gründer kennenlernen','Meet the founder'),'ueber-uns')+item(root+'sortiment/index.html#gerichte',pick('Gerichte & Allergene','Meals & allergens'),'allergene')+'</div></div></div>'+
  item(href('kontakt/index.html'),pick('Kontakt','Contact'),'kontakt');
  const triggers=[...mainNav.querySelectorAll('[data-nav-trigger]')];
  const hoverPointer=matchMedia('(hover: hover) and (pointer: fine)');
@@ -80,9 +80,40 @@ if(mainNav){
 const steps=[['🍲','Gericht auswählen','Choose a meal','Mahlzeit auf dem Touchscreen wählen.','Choose a meal on the touchscreen.'],['💳','Kontaktlos bezahlen','Pay contactlessly','Bequem bargeldlos zahlen.','Pay easily without cash.'],['♨️','Erhitzen oder mitnehmen','Heat or take away','Direkt heiß genießen oder gekühlt mitnehmen.','Enjoy it warm, or take it chilled.']];
 const models={self:['Selbstzahler-Modell','Self-pay model','Nutzer zahlen selbst. Wir prüfen gemeinsam, ob das Standortkonzept wirtschaftlich passt.','Customers pay for meals themselves. We assess whether the location is a good fit.'],subsidy:['Mitarbeiter-Zuschuss','Employee meal subsidy','Vergünstigte Mahlzeiten als Benefit, mit individuell abgestimmter Kosten- und Steuerstruktur.','Subsidised employee meals with an individually agreed cost and tax structure.'],rent:['Miet- oder Pauschalmodell','Rental or fixed-fee model','Eine vereinbarte Monatsgebühr schafft planbare Kosten.','An agreed monthly fee creates predictable costs.'],partner:['Individuelle Partnerschaft','Tailored partnership','Bei passenden Flächen prüfen wir Umsatz- oder Standortmodelle.','For suitable sites, we can consider revenue-sharing or location arrangements.']};
 document.querySelector('[data-model]')?.addEventListener('change',e=>{let m=models[e.target.value];document.querySelector('[data-model-title]').textContent=m[en?1:0];document.querySelector('[data-model-desc]').textContent=m[en?3:2]});
-let category='all';const foods=[...document.querySelectorAll('[data-meal-category]')],filters=[...document.querySelectorAll('[data-filter]')],search=document.querySelector('[data-search]'),allergen=document.querySelector('[data-allergen]');
-const filter=()=>{let n=0;foods.forEach(c=>{let valid=(category==='all'||c.dataset.mealCategory===category)&&(!search?.value||c.textContent.toLowerCase().includes(search.value.toLowerCase().trim()))&&(!allergen?.value||!c.dataset.allergens.split(' ').includes(allergen.value));c.hidden=!valid;if(valid)n++});let count=document.querySelector('[data-count]');if(count)count.textContent=n+pick(' Gerichte',' meals');let empty=document.querySelector('[data-empty]');if(empty)empty.hidden=n!==0};
-filters.forEach(btn=>btn.addEventListener('click',()=>{category=btn.dataset.filter;filters.forEach(x=>x.setAttribute('aria-pressed',String(x===btn)));filter()}));search?.addEventListener('input',filter);allergen?.addEventListener('change',filter);filter();
+let category='all';
+const foods=[...document.querySelectorAll('[data-meal-category]')];
+const filters=[...document.querySelectorAll('[data-filter]')];
+const search=document.querySelector('[data-search]');
+const allergen=document.querySelector('[data-allergen]');
+const normalise=s=>s.toLocaleLowerCase('de').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ß/g,'ss');
+const filter=()=>{
+ let count=0;
+ const query=normalise(search?.value.trim()||'');
+ for(const card of foods){
+  const kind=card.dataset.mealCategory;
+  const categoryMatches=category==='all'||kind===category||(category==='vegetarian'&&(kind==='vegan'||kind==='vegetarian'));
+  const allergyTokens=(card.dataset.allergens||'').split(' ');
+  const safeFilter=!allergen?.value||(!allergyTokens.includes(allergen.value)&&!allergyTokens.includes('unknown'));
+  const visible=categoryMatches&&(!query||normalise(card.textContent).includes(query))&&safeFilter;
+  card.hidden=!visible;if(visible)count++;
+ }
+ const label=document.querySelector('[data-count]');
+ if(label)label.textContent=count+pick(count===1?' Gericht':' Gerichte',count===1?' meal':' meals');
+ const empty=document.querySelector('[data-empty]');if(empty)empty.hidden=count!==0;
+};
+filters.forEach(btn=>btn.addEventListener('click',()=>{
+ category=btn.dataset.filter;
+ filters.forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+ filter();
+}));
+search?.addEventListener('input',filter);
+allergen?.addEventListener('change',filter);
+document.querySelector('[data-meal-reset]')?.addEventListener('click',()=>{
+ category='all';if(search)search.value='';if(allergen)allergen.value='';
+ filters.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter==='all')));
+ filter();search?.focus();
+});
+filter();
 const panel=document.querySelector('[data-chat]'),opener=document.querySelector('[data-chat-open]'),input=document.querySelector('[data-chat-input]');
 const composer = panel?.querySelector('[data-compose]');
 const chatPreference = 'leckerding-chat-dismissed';

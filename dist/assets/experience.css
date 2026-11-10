@@ -208,3 +208,65 @@
 .partner-match{background:#dbe9d3}.partner-segment{display:flex;flex-wrap:wrap;gap:.45rem;margin:2rem 0 1rem}.partner-segment button{padding:.9rem 1.1rem;border:1px solid #95b29a;background:#f9f8e9;color:#123b2d;font-weight:800;cursor:pointer}.partner-segment button[aria-selected=true]{background:#123b2d;color:#fff}.partner-match-result{display:grid;grid-template-columns:1.4fr .6fr;gap:2rem;background:#f8f8ea;border:1px solid #b7c9ac;padding:clamp(1.5rem,3vw,3rem)}.partner-match-result h3{font-size:clamp(2.1rem,4vw,4rem)}.partner-match-choice{border-left:1px solid #b6cba9;padding-left:2rem}.partner-match-choice>span{display:block;font-weight:850;font-size:.83rem;margin-bottom:1rem}.partner-match-choice a{display:block;padding:.65rem 0;border-bottom:1px solid #abc2a5;text-decoration:none;font-weight:800}.partner-match-choice a:hover{text-decoration:underline}
 @media(max-width:900px){.machine-hero-grid,.machine-showcase-grid,.placement-layout,.machine-video-grid,.partner-hero-grid,.partner-price-grid{grid-template-columns:1fr}.machine-hero-visual{min-height:28rem}.machine-hero-visual img{max-height:27rem}.machine-showcase-photo{min-height:27rem}.machine-showcase-photo img{height:27rem}.machine-stamp-top{right:1rem}.machine-flow,.machine-service-steps,.partner-cards{grid-template-columns:1fr}.machine-flow::before{display:none}.machine-flow article+article{border-left:0;border-top:1px solid var(--line)}.partner-match-result{grid-template-columns:1fr}.partner-match-choice{border-left:0;border-top:1px solid var(--line);padding:1rem 0 0}.machine-facts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.machine-last-inner{display:block}.machine-last-inner>a{margin-top:1.5rem}}
 @media(prefers-reduced-motion:no-preference){.machine-hero-visual img{animation:machine-float 6s ease-in-out infinite}.machine-flow article::before{content:"";position:absolute;top:4.1rem;left:0;width:.6rem;height:.6rem;background:#378357;border-radius:50%;animation:machine-signal 3s ease-in-out infinite}.machine-flow article:nth-child(2)::before{animation-delay:1s}.machine-flow article:nth-child(3)::before{animation-delay:2s}@keyframes machine-float{50%{transform:translateY(-12px)}}@keyframes machine-signal{50%{box-shadow:0 0 0 14px #43835716}}}
+
+/* LECKERDING unified product catalogue, full supplier ingredient details. */
+.menu-catalog-intro{background:#173d30;color:#fff;padding-block:clamp(3rem,6vw,6rem)}
+.menu-catalog-intro .eyebrow{color:#dafa90}
+.menu-catalog-intro h1{font:850 clamp(4rem,8vw,8rem)/.95 var(--display);letter-spacing:-.035em;max-width:17ch}
+.menu-catalog-intro h1 em{color:#dafa90;font-style:normal}
+.menu-catalog-intro .lead{max-width:56rem;color:#e4eee3}
+.menu-catalog-intro .primary{background:#dafa90;border-color:#dafa90;color:#123b2d}
+.menu-catalog-intro .outline{color:#fff;border-color:#d3e4d0}
+.menu-photos h2,.menu-collection h2{font:850 clamp(2.8rem,5vw,5rem)/1 var(--display)}
+.menu-featured-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem}
+.menu-featured-gallery figure{background:#f0ecde;margin:0;border:1px solid var(--line)}
+.menu-featured-gallery img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain}
+.menu-featured-gallery figcaption{font-weight:850;padding:.9rem;border-top:1px solid var(--line)}
+.meal-catalog-controls{background:#f8fbf0;border:1px solid #bacdae;padding:clamp(1.2rem,2.5vw,2rem);margin:2rem 0 1.3rem}
+.meal-catalog-controls>label{display:block;font-weight:850;margin-bottom:.6rem}
+.meal-search-row{display:flex;gap:.55rem}
+.meal-search-row input{min-width:0;flex:1;border:1px solid #a8bca4;padding:.8rem .9rem;background:#fff;color:#153e30;font:inherit}
+.meal-search-row button{white-space:nowrap}
+.meal-control-bottom{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:1.3rem}
+.meal-type-buttons{display:flex;flex-wrap:wrap;gap:.4rem}
+.meal-type-buttons button{cursor:pointer}
+.meal-control-bottom>label{display:flex;flex-direction:column;gap:.45rem;font-size:.8rem;font-weight:800}
+.meal-control-bottom select{min-height:2.8rem;border:1px solid #9bac98;background:white;padding:.5rem;min-width:13rem;font:inherit}
+.meal-filter-disclaimer{font-size:.78rem;color:#526753;margin:1rem 0 0;max-width:72rem}
+.meal-result-counter{font-weight:850;color:#154d34;margin:1.1rem 0}
+.menu-catalog-empty{padding:1.4rem;border:1px dashed #4b8f65}
+.meal-record-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;align-items:start}
+.meal-record{background:#fffef8;border:1px solid #b6c6ac;min-width:0}
+.meal-record[hidden]{display:none!important}
+.meal-record>summary{padding:clamp(1rem,2.2vw,1.6rem);cursor:pointer;list-style:none}
+.meal-record>summary::-webkit-details-marker{display:none}
+.meal-record>summary:focus-visible{outline:3px solid #126744;outline-offset:-3px}
+.meal-record[open]{border-color:#225b40;box-shadow:4px 4px 0 #c3d9bb}
+.ld-summary-top{display:flex;gap:.4rem;flex-wrap:wrap}
+.ld-tag,.ld-type{display:inline-block;font-size:.7rem;font-weight:850;padding:.35rem .5rem;background:#dfedcb;color:#164b33;text-transform:uppercase;letter-spacing:.05em}
+.ld-type{background:#f1ebd8;color:#5b553b}
+.meal-record summary h3{font:850 clamp(1.85rem,2.8vw,2.8rem)/1.08 var(--display);margin:1.2rem 0 .6rem}
+.meal-record summary p{font-size:.87rem;line-height:1.6;margin:.35rem 0}
+.meal-record summary .ld-allergens{color:#355642}
+.ld-open-label{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1rem;padding-top:.85rem;border-top:1px solid #d0d9c9;font-size:.8rem;font-weight:850;color:#145c3b}
+.ld-open-text,.meal-record[open] .ld-closed-text{display:none}
+.meal-record[open] .ld-open-text{display:inline}
+.ld-plus{font:850 1.6rem/1 var(--display)}
+.meal-record[open] .ld-plus{transform:rotate(45deg)}
+.ld-detail{padding:1rem clamp(1rem,2.2vw,1.6rem) 1.6rem;border-top:1px solid #b6c6ac;overflow-wrap:anywhere}
+.ld-detail h4{font:850 1.45rem/1.2 var(--display);margin:1.5rem 0 .55rem}
+.ld-detail p{font-size:.85rem;line-height:1.7;color:#344d3e}
+.ld-ingredients strong{color:#124b35;text-decoration:underline;text-decoration-thickness:1px}
+.ld-traces{border-left:3px solid #dcad46;padding:.25rem .8rem;background:#fcf5e6;margin:1.2rem 0}
+.ld-nutrition{margin-top:1.5rem}
+.ld-nutrition table{border-collapse:collapse;width:100%;font-size:.8rem}
+.ld-nutrition th,.ld-nutrition td{text-align:left;padding:.4rem .6rem;border-bottom:1px solid #d7ded3;vertical-align:top}
+.ld-nutrition th{font-weight:700;width:60%}
+.ld-nutrition caption{text-align:left;padding:.5rem 0;font-weight:850}
+.ld-meal-footer{padding-top:1rem;margin-top:1.25rem;border-top:1px solid #bdcbb6;display:flex;flex-wrap:wrap;gap:.7rem;justify-content:space-between;align-items:flex-start}
+.ld-meal-footer span{font-size:.75rem;color:#54695a}
+.ld-meal-footer a{font-size:.75rem;font-weight:850;text-decoration:underline}
+.meal-catalog-note{background:#e7f1dd;border-left:4px solid #1d6e44;padding:1.5rem;margin-top:2.5rem}
+.meal-catalog-note p{max-width:68rem;font-size:.86rem}
+@media(max-width:820px){.meal-record-list{grid-template-columns:1fr}.menu-featured-gallery{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.menu-featured-gallery{grid-template-columns:1fr}.meal-search-row{flex-direction:column}.meal-search-row button{width:100%}}
