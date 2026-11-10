@@ -3,6 +3,27 @@
 const en=document.documentElement.lang==='en',pick=(de,eng)=>en?eng:de,wa='https://wa.me/4915511546761';
 const menu=document.querySelector('[data-menu]'),toggle=document.querySelector('[data-menu-button]');
 toggle?.addEventListener('click',()=>{let open=menu.dataset.open==='true';menu.dataset.open=String(!open);toggle.setAttribute('aria-expanded',String(!open))});
+/* Mega menu: the original links remain usable when JavaScript is unavailable. */
+const mainNav=document.querySelector('[data-menu]');
+if(mainNav){
+ const asset=document.querySelector('script[src$="assets/redesign.js"]');
+ const root=(asset?.getAttribute('src')||'assets/redesign.js').replace(/assets\/redesign\.js$/,'');
+ const part=en?'en/':'';const href=path=>root+part+path;
+ const page=location.pathname;
+ const active=key=>key==='home'?(/\/(en\/)?(index\.html)?$/.test(page)):page.includes('/'+key+'/');
+ const item=(url,label,key)=>'<a href="'+url+'"'+(active(key)?' aria-current="page"':'')+'>'+label+'</a>';
+ mainNav.classList.add('nav-mega');
+ mainNav.innerHTML=item(href('index.html'),'Home','home')+
+ '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-solutions">'+pick('Lösungen','Solutions')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-solutions" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FÜR STANDORTE','FOR LOCATIONS')+'</span><strong>'+pick('Gute Mahlzeiten. Weniger Aufwand.','Better meals. Less effort.')+'</strong><p>'+pick('Verpflegungslösungen für unterschiedliche Standorte.','Food vending solutions for different locations.')+'</p>'+item(href('standortloesungen/index.html'),pick('Alle Lösungen ansehen →','View solutions →'),'standortloesungen')+'</div><div class="nav-panel-links">'+item(href('sortiment/index.html'),pick('Sortiment','Menu'),'sortiment')+item(href('standortloesungen/index.html'),pick('Standortlösungen','Location solutions'),'standortloesungen')+item(root+'partnerschaftsmodelle/index.html',pick('Partnerschaftsmodelle','Partnership models (DE)'),'partnerschaftsmodelle')+item(root+'unserer-automat/index.html',pick('Unser Automat','How it works (DE)'),'unserer-automat')+'</div></div></div>'+
+ item(href('ueber-uns/index.html'),pick('Unternehmen','Company'),'ueber-uns')+
+ '<div class="nav-group"><button class="nav-trigger" type="button" data-nav-trigger aria-expanded="false" aria-controls="nav-insights">'+pick('Wissen','Insights')+' <span aria-hidden="true" class="nav-chevron">⌄</span></button><div class="nav-panel" id="nav-insights" hidden><div class="nav-panel-lead"><span class="nav-overline">'+pick('FRAGEN & EINBLICKE','HELP & IDEAS')+'</span><strong>'+pick('Wissenswertes rund um LECKERDING.','Everything worth knowing.')+'</strong><p>'+pick('Antworten und Beiträge rund um moderne Verpflegung.','Answers and articles about modern workplace meals.')+'</p>'+item(href('faq/index.html'),pick('Zur FAQ →','Explore FAQ →'),'faq')+'</div><div class="nav-panel-links">'+item(href('faq/index.html'),pick('Häufige Fragen','FAQ'),'faq')+item(href('blog/index.html'),pick('Blog & Beiträge','Journal'),'blog')+item(href('ueber-uns/index.html#shawn-veldhuis'),pick('Gründer kennenlernen','Meet the founder'),'ueber-uns')+item(root+'allergene/index.html',pick('Zutaten & Allergene','Allergens (DE)'),'allergene')+'</div></div></div>'+
+ item(href('kontakt/index.html'),pick('Kontakt','Contact'),'kontakt');
+ const triggers=[...mainNav.querySelectorAll('[data-nav-trigger]')];
+ const close=()=>triggers.forEach(btn=>{btn.setAttribute('aria-expanded','false');document.getElementById(btn.getAttribute('aria-controls')).hidden=true;});
+ triggers.forEach(btn=>btn.addEventListener('click',()=>{const next=btn.getAttribute('aria-expanded')!=='true';close();btn.setAttribute('aria-expanded',String(next));document.getElementById(btn.getAttribute('aria-controls')).hidden=!next;}));
+ document.addEventListener('click',event=>{if(!event.target.closest('.nav-group'))close();});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'){const open=triggers.find(b=>b.getAttribute('aria-expanded')==='true');if(open){close();open.focus();}}});
+}
 const steps=[['🍲','Gericht auswählen','Choose a meal','Mahlzeit auf dem Touchscreen wählen.','Choose a meal on the touchscreen.'],['💳','Kontaktlos bezahlen','Pay contactlessly','Bequem bargeldlos zahlen.','Pay easily without cash.'],['♨️','Erhitzen oder mitnehmen','Heat or take away','Direkt heiß genießen oder gekühlt mitnehmen.','Enjoy it warm, or take it chilled.']];
 const models={self:['Selbstzahler-Modell','Self-pay model','Nutzer zahlen selbst. Wir prüfen gemeinsam, ob das Standortkonzept wirtschaftlich passt.','Customers pay for meals themselves. We assess whether the location is a good fit.'],subsidy:['Mitarbeiter-Zuschuss','Employee meal subsidy','Vergünstigte Mahlzeiten als Benefit, mit individuell abgestimmter Kosten- und Steuerstruktur.','Subsidised employee meals with an individually agreed cost and tax structure.'],rent:['Miet- oder Pauschalmodell','Rental or fixed-fee model','Eine vereinbarte Monatsgebühr schafft planbare Kosten.','An agreed monthly fee creates predictable costs.'],partner:['Individuelle Partnerschaft','Tailored partnership','Bei passenden Flächen prüfen wir Umsatz- oder Standortmodelle.','For suitable sites, we can consider revenue-sharing or location arrangements.']};
 document.querySelector('[data-model]')?.addEventListener('change',e=>{let m=models[e.target.value];document.querySelector('[data-model-title]').textContent=m[en?1:0];document.querySelector('[data-model-desc]').textContent=m[en?3:2]});
@@ -26,7 +47,7 @@ function showChat(open, remember = false) {
 }
 let dismissed = false;
 try { dismissed = sessionStorage.getItem(chatPreference) === 'yes'; } catch {}
-showChat(!dismissed);
+showChat(false);
 opener?.addEventListener('click', () => showChat(panel.hidden, true));
 panel?.querySelector('[data-chat-close]')?.addEventListener('click', () => showChat(false, true));
 document.addEventListener('keydown', event => {
@@ -100,6 +121,7 @@ function renderStep(index) {
 }
 function scheduleRotation() {
   clearInterval(rotationTimer);
+  document.querySelector('.steps-layout')?.setAttribute('data-rotating',String(!rotationPaused && !document.hidden));
   if (rotationControl) {
     rotationControl.textContent = rotationPaused ? pick('▶ Ablauf starten', '▶ Start rotation') : pick('Ⅱ Ablauf pausieren', 'Ⅱ Pause rotation');
     rotationControl.setAttribute('aria-pressed', String(rotationPaused));
@@ -153,6 +175,12 @@ if (faqSearch) {
     empty.hidden = visible > 0;
   }
   faqSearch.addEventListener('input', searchFaq);
+  document.querySelector('[data-faq-form]')?.addEventListener('submit',event=>{
+    event.preventDefault();searchFaq();
+    const first=questions.find(q=>!q.hidden);
+    if(first){first.open=true;first.scrollIntoView({behavior:motion.matches?'auto':'smooth',block:'center'});first.querySelector('summary')?.focus({preventScroll:true});}
+    else empty?.scrollIntoView({behavior:motion.matches?'auto':'smooth',block:'center'});
+  });
   document.querySelector('[data-faq-reset]')?.addEventListener('click', () => { faqSearch.value = ''; searchFaq(); faqSearch.focus(); });
   searchFaq();
 }

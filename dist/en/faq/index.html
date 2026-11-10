@@ -38,13 +38,8 @@
 <p class="eyebrow">LECKERDING™ / FAQ</p>
 <h1>Frequently asked questions</h1>
 <p class="lead">From finding a suitable site to collecting a hot meal, find answers from our team.</p>
-<div class="faq-search-box">
-<label for="faq-search">Search questions and answers</label><div class="faq-search-row">
-<input id="faq-search" type="search" data-faq-search placeholder="Try costs, payment or allergens"><button type="button" class="btn outline" data-faq-reset>Reset</button>
-</div>
-<p data-faq-count role="status"></p>
-<p data-faq-empty hidden>No matching questions. Try another search term or contact our team.</p>
-</div>
+<form class="faq-search-box" data-faq-form role="search"><label for="faq-search">Search the FAQ</label><div class="faq-search-row"><span class="faq-search-icon" aria-hidden="true">⌕</span><input id="faq-search" name="q" type="search" enterkeyhint="search" data-faq-search autocomplete="off" placeholder="e.g. costs, payment, allergens"><button type="submit" class="btn primary">Search ↗</button><button type="button" class="btn outline faq-clear" data-faq-reset>Clear</button></div><p class="faq-search-help">Results update as you type. Press Enter to jump to the first matching answer.</p><p data-faq-count role="status"></p>
+<p data-faq-empty hidden>No matching questions. Try another search term or contact our team.</p></form>
 </div></div>
 <div class="wrap faq-body faq">
 <nav class="faq-topics" aria-label="FAQ topics"><a href="#thema-1">Costs and partnership models</a><a href="#thema-2">Installation and equipment</a><a href="#thema-3">Meals and quality</a><a href="#thema-4">Pilot and support</a><a href="#thema-5">Menu and everyday use</a></nav><div>

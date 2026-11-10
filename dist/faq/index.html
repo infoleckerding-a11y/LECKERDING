@@ -38,13 +38,8 @@
 <p class="eyebrow">LECKERDING™ / FAQ</p>
 <h1>Häufige Fragen</h1>
 <p class="lead">Vom ersten Standort-Check bis zur warmen Mahlzeit. Hier finden Sie die Antworten unseres Teams.</p>
-<div class="faq-search-box">
-<label for="faq-search">Fragen und Antworten durchsuchen</label><div class="faq-search-row">
-<input id="faq-search" type="search" data-faq-search placeholder="Zum Beispiel Kosten, Bezahlung oder Allergene"><button type="button" class="btn outline" data-faq-reset>Zurücksetzen</button>
-</div>
-<p data-faq-count role="status"></p>
-<p data-faq-empty hidden>Keine passenden Fragen gefunden. Versuchen Sie einen anderen Begriff oder kontaktieren Sie unser Team.</p>
-</div>
+<form class="faq-search-box" data-faq-form role="search"><label for="faq-search">FAQ durchsuchen</label><div class="faq-search-row"><span class="faq-search-icon" aria-hidden="true">⌕</span><input id="faq-search" name="q" type="search" enterkeyhint="search" data-faq-search autocomplete="off" placeholder="z. B. Kosten, Bezahlung, Allergene"><button type="submit" class="btn primary">Suchen ↗</button><button type="button" class="btn outline faq-clear" data-faq-reset>Leeren</button></div><p class="faq-search-help">Ergebnisse aktualisieren sich beim Tippen. Mit Enter springen Sie zur ersten passenden Antwort.</p><p data-faq-count role="status"></p>
+<p data-faq-empty hidden>Keine passenden Fragen gefunden. Versuchen Sie einen anderen Begriff oder kontaktieren Sie unser Team.</p></form>
 </div></div>
 <div class="wrap faq-body faq">
 <nav class="faq-topics" aria-label="FAQ-Themen"><a href="#thema-1">Kosten &amp; Standortmodell</a><a href="#thema-2">Technik &amp; Aufstellung</a><a href="#thema-3">Mahlzeiten &amp; Qualität</a><a href="#thema-4">Pilotphase &amp; Betreuung</a><a href="#thema-5">Sortiment &amp; Nutzung</a></nav><div>
