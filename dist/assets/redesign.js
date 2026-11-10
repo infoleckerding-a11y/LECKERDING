@@ -130,6 +130,60 @@ if (sectors) {
   choose(buttons[0]);
   sectors.hidden = false;
 }
+
+/* Product demonstration: local-only state, no external analytics. */
+const machineFeatureButtons=[...document.querySelectorAll('[data-machine-feature]')];
+if(machineFeatureButtons.length){
+ const details=[
+ ['Kühlung','Die vorverpackten Mahlzeiten werden im gekühlten Bereich bereitgestellt. LECKERDING überwacht den Betrieb und kümmert sich um die vereinbarten Kontroll- und Serviceprozesse.'],
+ ['Erwärmung','Auf Wunsch erwärmt das Gerät die ausgewählte Mahlzeit direkt vor Ort. Die konkrete Erhitzung erfolgt nach dem für das Produkt vorgesehenen Verfahren.'],
+ ['Touchscreen & Zahlung','Die Gerichte lassen sich am Touchscreen auswählen und bargeldlos bezahlen. Zutaten, Allergene und Nährwerte stehen zusätzlich auf unserer Sortimentsseite.'],
+ ['Betreuung','LECKERDING koordiniert Bestückung, Reinigung, technische Prüfung und die vereinbarten betrieblichen Kontrollen – angepasst an den jeweiligen Standort.']
+ ];
+ machineFeatureButtons.forEach((button,i)=>button.addEventListener('click',()=>{
+   machineFeatureButtons.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+   document.querySelector('[data-machine-feature-title]').textContent=details[i][0];
+   document.querySelector('[data-machine-feature-description]').textContent=details[i][1];
+ }));
+}
+const placementInfo={
+ indoor:['Mitten im Alltag','Ideal in Foyers, Pausenräumen, Lobbys, Wohnanlagen und anderen gut erreichbaren Innenbereichen. Entscheidend sind Platz, Stromanschluss, Belüftung und der Zugang zum Nachfüllen.',['Regulärer Stromanschluss','Gute Sichtbarkeit und Erreichbarkeit','Platz für Bedienung und Service'],'Innenbereich · Illustration'],
+ outdoor:['Auch geschützt draußen möglich','In geeigneten geschützten Außenbereichen kann der Automat eine Verpflegungslücke schließen – beispielsweise an überdachten Standorten. Die konkrete Machbarkeit prüfen wir immer individuell.',['Ausreichender Schutz vor Witterung','Geeignete Stromversorgung und Temperaturbedingungen','Sicherer Zugang für Nutzer und Service'],'Geschützter Außenbereich · Illustration']
+};
+const placementButtons=[...document.querySelectorAll('[data-placement]')];
+placementButtons.forEach(button=>button.addEventListener('click',()=>{
+ const key=button.dataset.placement;
+ const [title,copy,items,label]=placementInfo[key];
+ placementButtons.forEach(b=>b.setAttribute('aria-selected',String(b===button)));
+ document.querySelector('[data-placement-title]').textContent=title;
+ document.querySelector('[data-placement-copy]').textContent=copy;
+ const list=document.querySelector('[data-placement-list]');list.replaceChildren(...items.map(text=>{const li=document.createElement('li');li.textContent=text;return li;}));
+ document.querySelector('[data-placement-scene]').dataset.placementScene=key;
+ document.querySelector('[data-placement-scene-label]').textContent=label;
+ document.getElementById('placement-panel')?.setAttribute('aria-labelledby',button.id);
+}));
+const partnerModels={
+ office:['Mehr Verpflegung für Ihr Team','Regelmäßige Nutzer, Pausenzeiten und ein möglicher Mitarbeiter-Benefit stehen im Vordergrund. Eine Pauschale, ein Zuschuss oder eine Kombination können infrage kommen.',[['Miet- oder Pauschalmodell','#partner-rent'],['Essenszuschuss','#partner-benefit']]],
+ living:['Mehr Komfort für Bewohner und Gäste','Ein zusätzliches Verpflegungsangebot ohne eigene Küche ist hier oft besonders interessant. Ein Service-Modell oder eine flexible Kombination kann passen.',[['Service-Modell','#partner-service'],['Individuelle Kombination','#partner-flex']]],
+ transit:['Für Menschen unterwegs','Wo viele Menschen kommen und gehen, kann eine individuelle Nutzung der Fläche oder eine Umsatzpartnerschaft sinnvoll sein.',[['Standort- oder Umsatzmodell','#partner-location'],['Service-Modell','#partner-service']]],
+ leisure:['Mehr Auswahl vor und nach Aktivitäten','Studios und Freizeiteinrichtungen können ihr Angebot mit vollständigen Mahlzeiten ergänzen – ohne selbst eine Küche betreiben zu müssen.',[['Service-Modell','#partner-service'],['Individuelle Kombination','#partner-flex']]]
+};
+const partnerButtons=[...document.querySelectorAll('[data-partner-match]')];
+partnerButtons.forEach(button=>button.addEventListener('click',()=>{
+ const data=partnerModels[button.dataset.partnerMatch];
+ partnerButtons.forEach(b=>b.setAttribute('aria-selected',String(b===button)));
+ document.querySelector('[data-match-title]').textContent=data[0];
+ document.querySelector('[data-match-description]').textContent=data[1];
+ const links=document.querySelector('[data-match-links]');
+ links.replaceChildren(...data[2].map(([label,href])=>{const a=document.createElement('a');a.href=href;a.textContent=label+' ↗';return a;}));
+ document.getElementById('match-panel')?.setAttribute('aria-labelledby',button.id);
+}));
+/* Progressive enhancement: content remains visible if JavaScript is disabled. */
+if('IntersectionObserver' in window&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+ const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('has-entered');observer.unobserve(entry.target);}}),{threshold:.1});
+ document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el));
+}
+
 const leadForm=document.querySelector('[data-lead-form]');
 if(leadForm){
  const params=new URLSearchParams(location.search);
